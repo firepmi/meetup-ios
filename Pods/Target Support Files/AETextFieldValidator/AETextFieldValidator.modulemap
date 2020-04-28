@@ -1,0 +1,6 @@
+framework module AETextFieldValidator {
+  umbrella header "AETextFieldValidator-umbrella.h"
+
+  export *
+  module * { export * }
+}

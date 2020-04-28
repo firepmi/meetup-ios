@@ -1,0 +1,233 @@
+PODS:
+  - AETextFieldValidator (1.1.2)
+  - Alamofire (4.8.2)
+  - AppAuth (1.3.0):
+    - AppAuth/Core (= 1.3.0)
+    - AppAuth/ExternalUserAgent (= 1.3.0)
+  - AppAuth/Core (1.3.0)
+  - AppAuth/ExternalUserAgent (1.3.0)
+  - Cosmos (21.0.0)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
+  - FBSDKCoreKit (5.10.1):
+    - FBSDKCoreKit/Basics (= 5.10.1)
+    - FBSDKCoreKit/Core (= 5.10.1)
+  - FBSDKCoreKit/Basics (5.10.1)
+  - FBSDKCoreKit/Core (5.10.1):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (5.10.1):
+    - FBSDKLoginKit/Login (= 5.10.1)
+  - FBSDKLoginKit/Login (5.10.1):
+    - FBSDKCoreKit (~> 5.0)
+  - Firebase/Auth (6.12.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 6.3.1)
+  - Firebase/Core (6.12.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 6.1.5)
+  - Firebase/CoreOnly (6.12.0):
+    - FirebaseCore (= 6.3.3)
+  - Firebase/Database (6.12.0):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (~> 6.1.2)
+  - Firebase/Storage (6.12.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 3.4.1)
+  - FirebaseAnalytics (6.1.5):
+    - FirebaseCore (~> 6.3)
+    - FirebaseInstanceID (~> 4.2)
+    - GoogleAppMeasurement (= 6.1.5)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - FirebaseAuth (6.3.1):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.2)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.2)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseAuthInterop (1.0.0)
+  - FirebaseCore (6.3.3):
+    - FirebaseCoreDiagnostics (~> 1.0)
+    - FirebaseCoreDiagnosticsInterop (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Logger (~> 6.2)
+  - FirebaseCoreDiagnostics (1.1.2):
+    - FirebaseCoreDiagnosticsInterop (~> 1.0)
+    - GoogleDataTransportCCTSupport (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Logger (~> 6.2)
+    - nanopb (~> 0.3.901)
+  - FirebaseCoreDiagnosticsInterop (1.1.0)
+  - FirebaseDatabase (6.1.2):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+    - leveldb-library (~> 1.22)
+  - FirebaseInstanceID (4.2.7):
+    - FirebaseCore (~> 6.0)
+    - GoogleUtilities/Environment (~> 6.0)
+    - GoogleUtilities/UserDefaults (~> 6.0)
+  - FirebaseStorage (3.4.1):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleAppMeasurement (6.1.5):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - GoogleDataTransport (3.2.0)
+  - GoogleDataTransportCCTSupport (1.2.2):
+    - GoogleDataTransport (~> 3.2)
+    - nanopb (~> 0.3.901)
+  - GoogleSignIn (5.0.2):
+    - AppAuth (~> 1.2)
+    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleUtilities/AppDelegateSwizzler (6.3.1):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (6.3.1)
+  - GoogleUtilities/Logger (6.3.1):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (6.3.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (6.3.1):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (6.3.1)"
+  - GoogleUtilities/Reachability (6.3.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (6.3.1):
+    - GoogleUtilities/Logger
+  - GTMAppAuth (1.0.0):
+    - AppAuth/Core (~> 1.0)
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.3.0):
+    - GTMSessionFetcher/Full (= 1.3.0)
+  - GTMSessionFetcher/Core (1.3.0)
+  - GTMSessionFetcher/Full (1.3.0):
+    - GTMSessionFetcher/Core (= 1.3.0)
+  - InputBarAccessoryView (4.2.2)
+  - IQKeyboardManager (6.5.5)
+  - leveldb-library (1.22)
+  - LocationPickerViewController (3.4)
+  - MessageKit (3.0.0):
+    - InputBarAccessoryView (~> 4.2.2)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
+  - RangeSeekSlider (1.8.0)
+  - SDWebImage (5.3.1):
+    - SDWebImage/Core (= 5.3.1)
+  - SDWebImage/Core (5.3.1)
+  - SwiftyJSON (5.0.0)
+  - VerticalCardSwiper (1.0.0)
+
+DEPENDENCIES:
+  - AETextFieldValidator
+  - Alamofire (= 4.8.2)
+  - Cosmos
+  - Crashlytics
+  - Fabric
+  - FBSDKLoginKit
+  - Firebase/Auth
+  - Firebase/Core
+  - Firebase/Database
+  - Firebase/Storage
+  - GoogleSignIn
+  - InputBarAccessoryView (= 4.2.2)
+  - IQKeyboardManager
+  - LocationPickerViewController
+  - MessageKit
+  - RangeSeekSlider
+  - SDWebImage
+  - SwiftyJSON
+  - VerticalCardSwiper (= 1.0.0)
+
+SPEC REPOS:
+  trunk:
+    - AETextFieldValidator
+    - Alamofire
+    - AppAuth
+    - Cosmos
+    - Crashlytics
+    - Fabric
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseAuth
+    - FirebaseAuthInterop
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCoreDiagnosticsInterop
+    - FirebaseDatabase
+    - FirebaseInstanceID
+    - FirebaseStorage
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleDataTransportCCTSupport
+    - GoogleSignIn
+    - GoogleUtilities
+    - GTMAppAuth
+    - GTMSessionFetcher
+    - InputBarAccessoryView
+    - IQKeyboardManager
+    - leveldb-library
+    - LocationPickerViewController
+    - MessageKit
+    - nanopb
+    - RangeSeekSlider
+    - SDWebImage
+    - SwiftyJSON
+    - VerticalCardSwiper
+
+SPEC CHECKSUMS:
+  AETextFieldValidator: 9c760ae43a97626e7840a810ac62a5cd2572c356
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
+  Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  FBSDKCoreKit: aa8887f21898ac5bcf07bef4fb253aa41c91be04
+  FBSDKLoginKit: 4f99f1f2d295778a9fac27917306140d19c2b189
+  Firebase: da031bc7012374e3bed17a6731b89327b29863b9
+  FirebaseAnalytics: 4e53a7eb7b76bc703c4d9239bc964545e9b23361
+  FirebaseAuth: b401a012cc33b04df3b52bb308b04e8766f2693e
+  FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
+  FirebaseCore: bcd6c112429249d7921e907d661e8955a3549e26
+  FirebaseCoreDiagnostics: 511f4f3ed7d440bb69127e8b97c2bc8befae639e
+  FirebaseCoreDiagnosticsInterop: e9b1b023157e3a2fc6418b5cb601e79b9af7b3a0
+  FirebaseDatabase: 963515d232ded06f36f6ce830507c94551866170
+  FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
+  FirebaseStorage: b7c6d00997bc21d4465453bdcc5cc65513110fed
+  GoogleAppMeasurement: 037f46d1d8ae8b312720f1042585ab961a1289e3
+  GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
+  GoogleDataTransportCCTSupport: ef79a4728b864946a8aafdbab770d5294faf3b5f
+  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
+  GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
+  GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
+  GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
+  InputBarAccessoryView: 2b937602598e2fab3149f37f51dd7ad795653812
+  IQKeyboardManager: 3a8b9e603f8b0eeaf5f096a1f2b2cfcf121992ef
+  leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
+  LocationPickerViewController: 4f33d63587bca682267a09779de2b2e09cf5b8e2
+  MessageKit: e892a9ca49ebe6d82684d3a93ad84021fa23e2c6
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  RangeSeekSlider: 650b11fa1edcb92e1e0ede797669d98622570fb5
+  SDWebImage: 7137d57385fb632129838c1e6ab9528a22c666cc
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  VerticalCardSwiper: 515b67e281731293cdf69d96904d67091389a1b4
+
+PODFILE CHECKSUM: ab1b0a9bab572dd63830288216c6b77d78b84c3e
+
+COCOAPODS: 1.9.1
