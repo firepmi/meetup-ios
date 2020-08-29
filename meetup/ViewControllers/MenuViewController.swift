@@ -28,7 +28,7 @@ class MenuViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor(hexString: "0a1533")
         tableView.frame = CGRect(x: 0, y: 85, width: view.frame.width, height: view.frame.height)
         tableView.separatorStyle = .none
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -44,15 +44,10 @@ class MenuViewController: UITableViewController {
         button.titleLabel?.font =  UIFont.sfProTextSemibold(size: 18)
         button.contentHorizontalAlignment = .left
         button.setTitle("Delete Account", for: .normal)
-        button.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(deleteAccount), for: .touchUpInside)
         self.view.addSubview(button)
     }
     
-    //MARK: - @Objc Methods
-    @objc func deleteAction() {
-        print("Delete account")
-        self.deleteAccount()
-    }
     
     //MARK: - Api
     func logOutApi(){
@@ -60,46 +55,65 @@ class MenuViewController: UITableViewController {
         self.tableView.reloadData()
         let alert = UIAlertController.init(title: "Alert", message: "Do you sure you want to LogOut", preferredStyle: .alert)
         let done = UIAlertAction.init(title: "YES", style: .default) { (alert) in
-            standard.set(nil, forKey: "paymentStatus")
+            self.logoutAction()
+        }
+        let cancel = UIAlertAction.init(title: "NO", style: .cancel, handler: nil)
+        alert.addAction(cancel)
+        alert.addAction(done)
+        self.present(alert, animated: true, completion: nil)
+    }
+    func logoutAction(){
+        standard.set(nil, forKey: "paymentStatus")
+        ApiInteraction.sharedInstance.onlineApi(status: false)
+        AppState.UserAuth.authToken = nil
+        AppState.presentLogin()
+        GIDSignIn.sharedInstance()?.signOut()
+    }
+    
+    @objc func deleteAccount(){
+        self.selectedMenuItem = nil
+        self.tableView.reloadData()
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "DeleteAccount") as! DeleteAccountDialogViewController
+        
+        vc.modalPresentationStyle = .overFullScreen
+        vc.dialogDelegate = self
+        
+        let popover = vc.popoverPresentationController
+        popover?.sourceView = self.view
+        popover?.sourceRect = self.view.bounds
+        popover?.delegate = self as? UIPopoverPresentationControllerDelegate
+        vc.modalTransitionStyle = .crossDissolve
+        
+        self.present(vc, animated: true, completion:nil)
+//
+//        let alert = UIAlertController.init(title: "Alert", message: "Do you sure you want to delete your account", preferredStyle: .alert)
+//        let done = UIAlertAction.init(title: "YES", style: .default) { (alert) in
+//
+//        }
+//        let cancel = UIAlertAction.init(title: "NO", style: .cancel, handler: nil)
+//        alert.addAction(cancel)
+//        alert.addAction(done)
+//        self.present(alert, animated: true, completion: nil)
+    }
+    func deleteAction(){
+        let param = ["userID": standard.string(forKey: "userId") ?? ""]
+        print(param)
+        self.view.startProgressHub()
+        ApiInteraction.sharedInstance.funcToHitApi(url: apiURL + "DeleteAccount", param: param, header: [:], success: { (json) in
+            print(json)
+            self.view.stopProgresshub()
             ApiInteraction.sharedInstance.onlineApi(status: false)
+            standard.set(nil, forKey: "userId")
             AppState.UserAuth.authToken = nil
             AppState.presentLogin()
             GIDSignIn.sharedInstance()?.signOut()
+            self.view.stopProgresshub()
+        }) { (error) in
+            print(error)
+            self.view.stopProgresshub()
         }
-        let cancel = UIAlertAction.init(title: "NO", style: .cancel, handler: nil)
-        alert.addAction(cancel)
-        alert.addAction(done)
-        self.present(alert, animated: true, completion: nil)
     }
-    
-    func deleteAccount(){
-        self.selectedMenuItem = nil
-        self.tableView.reloadData()
-        let alert = UIAlertController.init(title: "Alert", message: "Do you sure you want to delete your account", preferredStyle: .alert)
-        let done = UIAlertAction.init(title: "YES", style: .default) { (alert) in
-            let param = ["userID": standard.string(forKey: "userId") ?? ""]
-            print(param)
-            self.view.startProgressHub()
-            ApiInteraction.sharedInstance.funcToHitApi(url: apiURL + "DeleteAccount", param: param, header: [:], success: { (json) in
-                print(json)
-                self.view.stopProgresshub()
-                ApiInteraction.sharedInstance.onlineApi(status: false)
-                standard.set(nil, forKey: "userId")
-                AppState.UserAuth.authToken = nil
-                AppState.presentLogin()
-                GIDSignIn.sharedInstance()?.signOut()
-                self.view.stopProgresshub()
-            }) { (error) in
-                print(error)
-                self.view.stopProgresshub()
-            }
-        }
-        let cancel = UIAlertAction.init(title: "NO", style: .cancel, handler: nil)
-        alert.addAction(cancel)
-        alert.addAction(done)
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     // MARK: - Table view data source & TableView Delegates -
     override func numberOfSections(in tableView: UITableView) -> Int {
         // Return the number of sections.
@@ -116,13 +130,13 @@ class MenuViewController: UITableViewController {
         if (cell == nil) {
             cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "CELL")
             cell!.backgroundColor = UIColor.clear
-            cell!.textLabel?.textColor = UIColor.darkGray
+            cell!.textLabel?.textColor = UIColor.white
             let selectedBackgroundView = UIView(frame: CGRect(x: 0, y: 0, width: cell!.frame.size.width, height: cell!.frame.size.height))
             selectedBackgroundView.backgroundColor = UIColor.gray.withAlphaComponent(0.2)
             cell!.selectedBackgroundView = selectedBackgroundView
         }
         cell!.textLabel?.text = menu[indexPath.row]
-        cell?.textLabel?.textColor = UIColor.redColor()
+        cell?.textLabel?.textColor = UIColor.white
         cell?.textLabel?.font = UIFont.sfProTextSemibold(size: 18)
         return cell!
     }
@@ -197,13 +211,13 @@ class MenuViewController: UITableViewController {
         case 6:
            // destVC = mainStoryboard.instantiateViewController(withIdentifier: "WebNCID") as! WebViewController
             let destVC = mainStoryboard.instantiateViewController(withIdentifier: "WebVC") as! WebViewController
-            destVC.getDataURL = "http://3.8.95.229/Home/termsofservices"
+            destVC.getDataURL = "\(baseURL)Home/termsofservices"
             sideMenuController()?.setContentViewController(destVC)
             self.navigationController?.pushViewController(destVC, animated: true)
             break
         case 7:
             let destVC = mainStoryboard.instantiateViewController(withIdentifier: "WebVC") as! WebViewController
-            destVC.getDataURL = "http://3.8.95.229/Home/privacypolicy" //"https://www.hackingwithswift.com/articles/126/whats-new-in-swift-5-0"
+            destVC.getDataURL = "\(baseURL)Home/privacypolicy" //"https://www.hackingwithswift.com/articles/126/whats-new-in-swift-5-0"
             sideMenuController()?.setContentViewController(destVC)
             self.navigationController?.pushViewController(destVC, animated: true)
             break
@@ -223,4 +237,27 @@ class MenuViewController: UITableViewController {
             break
         }
     }
+}
+extension MenuViewController: DeleteAccountDialogDelegate {
+    func deleteAccountDialogViewController(_ deleteAccountDialog: DeleteAccountDialogViewController, selected result: Int) {
+        switch result {
+        case 0:
+            print("disable search")
+        case 1:
+            print("hide account")
+        case 2:
+            print("clear contents")
+        case 3:
+            print("notification off")
+        case 4:
+            logoutAction()
+        case 5:
+            deleteAction()
+        default:
+            break
+        }
+        hideSideMenuView()
+    }
+    
+    
 }

@@ -35,4 +35,9 @@ extension UIFont {
     class func syababFREETESTER(size s: CGFloat) -> UIFont {
         return UIFont(name: "SyababFREETESTER", size: s)!
     }
+    
+    class func uniformBold(size s: CGFloat) -> UIFont {
+        return UIFont(name: "Uniform-Bold", size: s)!
+    }
+    
 }

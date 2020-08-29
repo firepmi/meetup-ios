@@ -20,29 +20,29 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var locationNameLabel: UILabel!
-    @IBOutlet weak var ageLabel: UILabel!
-    @IBOutlet weak var jobLabel: UILabel!
+//    @IBOutlet weak var ageLabel: UILabel!
+//    @IBOutlet weak var jobLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var lookingForLabel: UILabel!
+//    @IBOutlet weak var lookingForLabel: UILabel!
     @IBOutlet weak var longestRelationshipLabel: UILabel!
-    @IBOutlet weak var kidsLabel: UILabel!
+//    @IBOutlet weak var kidsLabel: UILabel!
     @IBOutlet weak var hobbiesLabel: UILabel!
     @IBOutlet weak var percentLikeLabel: UILabel!
     @IBOutlet weak var percentPassLabel: UILabel!
-    @IBOutlet weak var percentHeartLabel: UILabel!
+//    @IBOutlet weak var percentHeartLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var unlikeButton: UIButton!
-    @IBOutlet weak var heartButton: UIButton!
+//    @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet weak var instagramNameLabel: UILabel!
-    @IBOutlet weak var facebookNameLabel: UILabel!
-    @IBOutlet weak var googlePlusNameLabel: UILabel!
-    @IBOutlet weak var youtubeNameLabel: UILabel!
-    @IBOutlet weak var bottomStackView: UIStackView!
+//    @IBOutlet weak var instagramNameLabel: UILabel!
+//    @IBOutlet weak var facebookNameLabel: UILabel!
+//    @IBOutlet weak var googlePlusNameLabel: UILabel!
+//    @IBOutlet weak var youtubeNameLabel: UILabel!
+//    @IBOutlet weak var bottomStackView: UIStackView!
     @IBOutlet weak var contentTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var contentLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoImage: UIImageView!
-    @IBOutlet weak var roundedView: RoundedView!
+    @IBOutlet weak var onlineStatusView: RoundedView!
     
     
     // MARK: - Variables
@@ -71,6 +71,7 @@ class ProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.isToolbarHidden  = true
+        scrollView.contentOffset = CGPoint.zero
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -116,12 +117,15 @@ class ProfileViewController: UIViewController {
     
     private func prepareNavigationBar()
     {
+        /*
         // Added right bar button
         let moreBarButtonItem = UIBarButtonItem(image: UIImage(named: "more-icon"),
                                                 style: .plain,
                                                 target: self,
                                                 action: #selector(moreBarButtonAction))
         navigationItem.rightBarButtonItem = moreBarButtonItem
+        */
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     
@@ -129,22 +133,22 @@ class ProfileViewController: UIViewController {
     //MARK:- Other functions
     func loadData(){
         self.userNameLabel.text = self.model.userName ?? ""
-        self.ageLabel.text = self.dateConverter(string: "\(self.model.DateOfBirth ?? "")")
-        self.userImageView.sd_setImage(with: URL(string: (self.model.userImage ?? "")), placeholderImage: #imageLiteral(resourceName: "profilePlaceholder"), options: .refreshCached) { (image, error, cache, url) in
+//        self.ageLabel.text = self.dateConverter(string: "\(self.model.DateOfBirth ?? "")")
+        self.userImageView.sd_setImage(with: URL(string: (self.model.userImage ?? "")), placeholderImage: #imageLiteral(resourceName: "anonymous.jpg"), options: .refreshCached) { (image, error, cache, url) in
             if image != nil{
                 self.userImageView.image = image
             }else{
-                self.userImageView.image = #imageLiteral(resourceName: "profilePlaceholder")
+                self.userImageView.image = #imageLiteral(resourceName: "anonymous.jpg")
             }
         }
-        self.lookingForLabel.text = self.model.lookingFor ?? ""
+//        self.lookingForLabel.text = self.model.lookingFor ?? ""
         self.longestRelationshipLabel.text = self.model.longestRelationship ?? ""
-        self.kidsLabel.text = self.model.kids ?? ""
+//        self.kidsLabel.text = self.model.kids ?? ""
         self.descriptionLabel.text = (self.model.Aboutme ?? "")
-        self.percentLikeLabel.text = (self.model.likePercentage ?? "0") + "% Like"
-        self.percentPassLabel.text = (self.model.unlikePercentage ?? "0") + "% Pass"
-        self.percentHeartLabel.text = (self.model.favouritePercentage ?? "0")
-        self.jobLabel.text = self.model.bodyType ?? ""
+        self.percentLikeLabel.text = (self.model.likePercentage ?? "0")
+        self.percentPassLabel.text = (self.model.unlikePercentage ?? "0")
+//        self.percentHeartLabel.text = (self.model.favouritePercentage ?? "0")
+//        self.jobLabel.text = self.model.bodyType ?? ""
         self.locationNameLabel.text = self.model.address ?? ""
         self.videoImage.sd_setImage(with: URL(string: self.model.videoImage ?? ""), placeholderImage: #imageLiteral(resourceName: "crop"), options: .refreshCached) { (image, error, cache, url) in
             if image != nil{
@@ -153,11 +157,11 @@ class ProfileViewController: UIViewController {
                 self.videoImage.image = #imageLiteral(resourceName: "crop")
             }
         }
-        self.instagramNameLabel.text = self.model.instagramUrl ?? ""
-        self.facebookNameLabel.text = self.model.facebookUrl ?? ""
-        self.googlePlusNameLabel.text = self.model.googleplusUrl ?? ""
-        self.youtubeNameLabel.text = self.model.youtubeUrl ?? ""
-        self.roundedView.isHidden = ((self.model.onlineStatus ?? "") == "0")
+//        self.instagramNameLabel.text = self.model.instagramUrl ?? ""
+//        self.facebookNameLabel.text = self.model.facebookUrl ?? ""
+//        self.googlePlusNameLabel.text = self.model.googleplusUrl ?? ""
+//        self.youtubeNameLabel.text = self.model.youtubeUrl ?? ""
+        self.onlineStatusView.isHidden = ((self.model.onlineStatus ?? "") == "0")
     }
     
     
@@ -169,8 +173,8 @@ class ProfileViewController: UIViewController {
     @IBAction func unlikeButtonAction(_ sender: UIButton) {
     }
     
-    @IBAction func heartButtonAction(_ sender: UIButton) {
-    }
+//    @IBAction func heartButtonAction(_ sender: UIButton) {
+//    }
     
     @IBAction func recordButtonAction(_ sender: UIButton) {
         if String(self.model.vedioUrl!.prefix(4)) != "http" {
@@ -189,43 +193,44 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    @IBAction func openInsta(_ sender: Any) {
-        guard ((self.instagramNameLabel.text ?? "") != "")else{
-            return
-        }
-        AppState.openURL(app: "Instagram", userName: self.instagramNameLabel.text ?? "")
-    }
     
-    @IBAction func openFacebook(_ sender: Any) {
-        guard ((self.facebookNameLabel.text ?? "") != "")else{
-            return
-        }
-        AppState.openURL(app: "Facebook", userName: self.facebookNameLabel.text ?? "")
-    }
-    
-    @IBAction func openGooglePlus(_ sender: Any) {
-        guard ((self.googlePlusNameLabel.text ?? "") != "")else{
-            return
-        }
-        AppState.openURL(app: "Googleplus", userName: self.googlePlusNameLabel.text ?? "")
-    }
-    
-    @IBAction func openYouTube(_ sender: Any) {
-        guard ((self.youtubeNameLabel.text ?? "") != "")else{
-            return
-        }
-        AppState.openURL(app: "Youtube", userName: self.youtubeNameLabel.text ?? "")
-    }
-    
-    @IBAction func messageAction(_ sender: Any) {
-      
-        let chatVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
-        chatVC.otherUserName = self.model.userName ?? ""
-        chatVC.otherUserImage = self.model.userImage ?? ""
-        chatVC.otherUserId = self.userId ?? ""
-        self.navigationController?.pushViewController(chatVC, animated: true)
-    }
-    
+//    @IBAction func openInsta(_ sender: Any) {
+//        guard ((self.instagramNameLabel.text ?? "") != "")else{
+//            return
+//        }
+//        AppState.openURL(app: "Instagram", userName: self.instagramNameLabel.text ?? "")
+//    }
+//
+//    @IBAction func openFacebook(_ sender: Any) {
+//        guard ((self.facebookNameLabel.text ?? "") != "")else{
+//            return
+//        }
+//        AppState.openURL(app: "Facebook", userName: self.facebookNameLabel.text ?? "")
+//    }
+//
+//    @IBAction func openGooglePlus(_ sender: Any) {
+//        guard ((self.googlePlusNameLabel.text ?? "") != "")else{
+//            return
+//        }
+//        AppState.openURL(app: "Googleplus", userName: self.googlePlusNameLabel.text ?? "")
+//    }
+//
+//    @IBAction func openYouTube(_ sender: Any) {
+//        guard ((self.youtubeNameLabel.text ?? "") != "")else{
+//            return
+//        }
+//        AppState.openURL(app: "Youtube", userName: self.youtubeNameLabel.text ?? "")
+//    }
+//
+//    @IBAction func messageAction(_ sender: Any) {
+//
+//        let chatVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
+//        chatVC.otherUserName = self.model.userName ?? ""
+//        chatVC.otherUserImage = self.model.userImage ?? ""
+//        chatVC.otherUserId = self.userId ?? ""
+//        self.navigationController?.pushViewController(chatVC, animated: true)
+//    }
+//
     @IBAction func commentAction(_ sender: Any) {
         guard standard.bool(forKey: "paymentStatus")else{
             self.showalert(msg: "Please upgrade application First")
@@ -266,8 +271,25 @@ class ProfileViewController: UIViewController {
             self.view.stopProgresshub()
         }
     }
+    
+    
+    @IBAction func onBack(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
+    @IBAction func onEditProfile(_ sender: Any) {
+    }
 }
 
+extension ProfileViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset.y)
+        var newHeight = 400 - scrollView.contentOffset.y
+        if( newHeight < 150) {
+            newHeight = 150
+        }
+        userImageView.frame = CGRect(x: userImageView.frame.minX, y: userImageView.frame.minY, width: userImageView.frame.width, height: newHeight)
+    }
+}
 // MARK: - ENSideMenuDelegate -
 extension ProfileViewController: ENSideMenuDelegate {
     func sideMenuWillOpen() {
@@ -300,3 +322,5 @@ extension ProfileViewController: ENSideMenuDelegate {
         print("sideMenuDidOpen")
     }
 }
+
+

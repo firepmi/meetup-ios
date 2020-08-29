@@ -31,7 +31,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var nameUserLabel: UILabel!
     @IBOutlet weak var rangeLabel: UILabel!
     @IBOutlet private var cardSwiper: VerticalCardSwiper!
-    @IBOutlet weak var viewBottomheight: NSLayoutConstraint!
     @IBOutlet weak var onlineStatus: UILabel!
     @IBOutlet weak var tutorialView: UIView!
     
@@ -66,6 +65,8 @@ class HomeViewController: UIViewController {
         else {
             tutorialView.isHidden = false
         }
+        
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,12 +76,12 @@ class HomeViewController: UIViewController {
         navigationController?.isToolbarHidden  = true
         // Side menu delegate
         self.sideMenuController()?.sideMenu?.delegate = self
-       
+       navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        title = "Look Listen & Feel"
+        title = "Connection"//"Look Listen & Feel"
         // Show navigation bar
         navigationController?.isNavigationBarHidden = false
         self.sideMenuController()?.sideMenu?.delegate = self
@@ -164,8 +165,8 @@ class HomeViewController: UIViewController {
         // Set gradient of mainView
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.view.bounds
-        let color = UIColor(hexString: "e51f41")
-        let color1 = UIColor(hexString: "ff7761")
+        let color = UIColor(hexString: "ffffff")//e51f41
+        let color1 = UIColor(hexString: "ffffff")//ff7761
         gradientLayer.colors = [color1.cgColor, color.cgColor]
         self.gradientView.layer.insertSublayer(gradientLayer, at: 0)
         // Set gradient of navigationBar
@@ -259,19 +260,33 @@ class HomeViewController: UIViewController {
         self.flagImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         if self.flagImageView.image == #imageLiteral(resourceName: "flag-icon"){
-            let okAction = UIAlertAction(title: "Report", style: .default) { (alert) in
-                self.clickButtonAnimation {
-                    self.flagImageView.transform = .identity
-                    self.flagImageView.image = (self.flagImageView.image == #imageLiteral(resourceName: "flag-icon")) ? #imageLiteral(resourceName: "report-small") : #imageLiteral(resourceName: "flag-icon")
-                }
-                
-                self.statusApi(status: "4")
-            }
-            let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
-                return
-            }
-            self.showAlert("Alert", message: "Are you sure you want to report this user?. Once Reported you will not able to see this user", style: .alert, actions: [okAction,cancel])
+//            let okAction = UIAlertAction(title: "Report", style: .default) { (alert) in
+//                self.clickButtonAnimation {
+//                    self.flagImageView.transform = .identity
+//                    self.flagImageView.image = (self.flagImageView.image == #imageLiteral(resourceName: "flag-icon")) ? #imageLiteral(resourceName: "report-small") : #imageLiteral(resourceName: "flag-icon")
+//                }
+//
+//                self.statusApi(status: "4")
+//            }
+//            let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+//                return
+//            }
+//            self.showAlert("Alert", message: "Are you sure you want to report this user?. Once Reported you will not able to see this user", style: .alert, actions: [okAction,cancel])
+//
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ReportDialog") as! ReportDialogViewController
             
+            vc.modalPresentationStyle = .overFullScreen
+            vc.dialogDelegate = self
+            vc.name = nameUserLabel.text!
+            
+            let popover = vc.popoverPresentationController
+            popover?.sourceView = self.view
+            popover?.sourceRect = self.view.bounds
+            popover?.delegate = self as? UIPopoverPresentationControllerDelegate
+            vc.modalTransitionStyle = .crossDissolve
+            
+            self.present(vc, animated: true, completion:nil)
         }
         else{
             self.statusApi(status: "4")
@@ -349,7 +364,7 @@ class HomeViewController: UIViewController {
                 }
                 guard self.model.count != 0 else{
                     self.cardView.isHidden = true
-                    self.viewBottomheight.constant = 0
+//                    self.viewBottomheight.constant = 0
                     return
                 }
                     DispatchQueue.main.async {
@@ -408,6 +423,17 @@ class HomeViewController: UIViewController {
     }
 }
 
+extension HomeViewController: ReportDialogDelegate {
+    func reportDialogViewController(_ reportDialog: ReportDialogViewController, selected result: Int) {
+        self.clickButtonAnimation {
+            self.flagImageView.transform = .identity
+            self.flagImageView.image = (self.flagImageView.image == #imageLiteral(resourceName: "flag-icon")) ? #imageLiteral(resourceName: "report-small") : #imageLiteral(resourceName: "flag-icon")
+        }
+        
+        self.statusApi(status: "4")
+    }
+    
+}
 // MARK: - UICollectionViewDelegateFlowLayout -
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

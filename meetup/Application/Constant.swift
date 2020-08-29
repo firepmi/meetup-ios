@@ -27,9 +27,9 @@ let emailRegx = "[A-Z0-9a-z._%+-]{3,}+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
 
 /// Url's using in app
 let mainURL = ""
-//let baseURL = "http://webappsitesdemo.com/MeetUp/api/"
+let baseURL = "http://looklistenandfeel.online/"
 //let baseURL = "http://192.168.1.238/api/"
-let baseURL = "http://3.8.95.229/"
+//let baseURL = "http://3.8.95.229/"
 let apiURL = "\(baseURL)api/"
 let SocialUrl = ""
 let standard = UserDefaults.standard

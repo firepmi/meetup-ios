@@ -84,8 +84,9 @@ class SenderCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
-        self.message.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        self.messageBackground.layer.cornerRadius = 15
+        self.message.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        self.messageBackground.layer.cornerRadius = 30
+        self.messageBackground.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMinXMaxYCorner]
         self.messageBackground.clipsToBounds = true
     }
 }
@@ -104,8 +105,9 @@ class ReceiverCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
-        self.message.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        self.messageBackground.layer.cornerRadius = 15
+        self.message.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        self.messageBackground.layer.cornerRadius = 30
+        self.messageBackground.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner]
         self.messageBackground.clipsToBounds = true
     }
 }

@@ -16,8 +16,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
 {
     
     // MARK: - IBOutlet
-    @IBOutlet weak var segmentControl: UISegmentedControl!
-    @IBOutlet weak var distanceSwitch: UISwitch!
+//    @IBOutlet weak var segmentControl: UISegmentedControl!
+//    @IBOutlet weak var distanceSwitch: UISwitch!
     @IBOutlet weak var distanceSlide: RangeSeekSlider!
     @IBOutlet weak var ageSlide: RangeSeekSlider!
     @IBOutlet weak var locationTextField: UITextField!
@@ -96,15 +96,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
     
     private func prepareStyle() {
         //Segment controll
-        segmentControl.layer.cornerRadius = 0.0
-        segmentControl.layer.borderWidth = 1.5
-        segmentControl.layer.borderColor = UIColor.redColor().cgColor
-        segmentControl.layer.masksToBounds = true
-        segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.sfProTextMedium(size: 14)], for: .normal)
-        segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.sfProTextMedium(size: 14)], for: .selected)
+//        segmentControl.layer.cornerRadius = 0.0
+//        segmentControl.layer.borderWidth = 1.5
+//        segmentControl.layer.borderColor = UIColor.redColor().cgColor
+//        segmentControl.layer.masksToBounds = true
+//        segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.sfProTextMedium(size: 14)], for: .normal)
+//        segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.sfProTextMedium(size: 14)], for: .selected)
         //Distance switch
-        distanceSwitch.set(width: 36, height: 20)
-        distanceSwitch.onTintColor = UIColor.redColor()
+//        distanceSwitch.set(width: 36, height: 20)
+//        distanceSwitch.onTintColor = UIColor.redColor()
         //Search button
         searchButton.bordered(withColor: UIColor.borderColor(), width: 1, radius: 7)
     }
@@ -147,7 +147,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
     //MARK:- Api
     func searchNowApi(){
         let param : Parameters = ["userID" : standard.string(forKey: "userId") ?? "",
-                                  "LookingFor": "\(segmentControl.selectedSegmentIndex)",
+//                                  "LookingFor": "\(segmentControl.selectedSegmentIndex)",
                                   "LocationName": locationTextField.text ?? "",
                                   "LocationLatitude": "\(lat ?? 0.0)",
                                   "LocationLongitude": "\(long ?? 0.0)",
@@ -157,7 +157,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
                                   "MaxAge" : "\(self.maxAge ?? 100)",          //
                                   "RaceType": raceTextfield.text ?? "" ,
                                   "BodyType": ((bodyTextfield.text ?? "") != "None") ? (bodyTextfield.text ?? "") : "",
-                                  "ShowUserDistance" : (self.distanceSwitch.isOn) ? "1" : "0"]
+                                 /* "ShowUserDistance" : (self.distanceSwitch.isOn) ? "1" : "0"*/]
         print(param)
         self.view.startProgressHub()
         ApiInteraction.sharedInstance.funcToHitApi(url: apiURL + "SearchFilter", param: param, header: [:], success: { (json) in
@@ -174,7 +174,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
                 let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
                 let destVC = mainStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
                 destVC.model = self.model
-                destVC.showDistance = (self.distanceSwitch.isOn) ? true : false
+//                destVC.showDistance = (self.distanceSwitch.isOn) ? true : false
                 if let vc = self.sideMenuController()?.sideMenu?.menuViewController as? MenuViewController{
                     vc.selectedMenuItem = 0
                     vc.tableView.reloadData()
@@ -245,8 +245,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
     func loadData(json: JSON){
         self.bodyTextfield.text = json["data"]["BodyType"].stringValue
         self.raceTextfield.text = json["data"]["RaceType"].stringValue
-        self.segmentControl.selectedSegmentIndex = (json["data"]["LookingFor"].stringValue == "male") ? 0 : 1
-        self.distanceSwitch.isOn = (json["data"]["ShowUserDistance"].intValue == 1) ? true : false
+//        self.segmentControl.selectedSegmentIndex = (json["data"]["LookingFor"].stringValue == "male") ? 0 : 1
+//        self.distanceSwitch.isOn = (json["data"]["ShowUserDistance"].intValue == 1) ? true : false
         self.ageSlide.selectedMinValue = CGFloat(json["data"]["MinAge"].doubleValue)
         self.ageSlide.selectedMaxValue = CGFloat(json["data"]["MaxAge"].doubleValue)
         self.distanceSlide.selectedMaxValue = CGFloat(json["data"]["MaxDistance"].doubleValue)

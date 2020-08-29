@@ -121,10 +121,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
     }
     fileprivate func configAppearance() {
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont.syababFREETESTER(size: 22),
-                                                    NSAttributedString.Key.foregroundColor: UIColor.mainColor()]
-        UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().barTintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont.uniformBold(size: 22),
+                                                    NSAttributedString.Key.foregroundColor: UIColor(hexString: "0a1533")]
+        UINavigationBar.appearance().tintColor = UIColor.black
+        UINavigationBar.appearance().barTintColor = UIColor.black
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffset(horizontal: -500, vertical: 0), for: .default)
     }
     

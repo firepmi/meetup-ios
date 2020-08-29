@@ -33,10 +33,12 @@ class InboxViewController: UIViewController {
     
     var filterMessage = [Message]()
     var objectMessage = [Message]()
+    var tapIndex = 0
     
     // MARK: - Outlets
-    @IBOutlet weak var segment: UISegmentedControl!
+//    @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var switchInboxImageView: UIImageView!
     
     //MARK: - ViewLifeCycle
     override func viewDidLoad() {
@@ -46,7 +48,7 @@ class InboxViewController: UIViewController {
         addTapGeture()
         addSwipeGeture()
         self.sideMenuController()?.sideMenu?.delegate = self
-        (self.segment.selectedSegmentIndex == 0) ? self.fetchMatchesApi() : nil
+        (tapIndex == 0) ? self.fetchMatchesApi() : nil
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,7 +90,17 @@ class InboxViewController: UIViewController {
     
     //MARK: - IBActions
     @IBAction func segmentChanged(_ sender: Any) {
-        (self.segment.selectedSegmentIndex == 0) ? self.fetchMatchesApi() : self.getChatWindows()
+//        (self.segment.selectedSegmentIndex == 0) ? self.fetchMatchesApi() : self.getChatWindows()
+    }
+    @IBAction func inboxChanged(_ sender: Any) {
+        tapIndex = (tapIndex + 1) % 2
+        if(tapIndex == 0) {
+            switchInboxImageView.image = UIImage(named: "switch_inbox_matches.png")
+        }
+        else {
+            switchInboxImageView.image = UIImage(named: "switch_inbox_messages.png")
+        }
+        (tapIndex == 0) ? self.fetchMatchesApi() : self.getChatWindows()
     }
     
     //MARK:- Other Methods
@@ -164,7 +176,7 @@ class InboxViewController: UIViewController {
 // MARK: - UITableViewDataSource -
 extension InboxViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.segment.selectedSegmentIndex == 0) ? self.matchesModel.count : self.filterMessage.count
+        return (tapIndex == 0) ? self.matchesModel.count : self.filterMessage.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -172,14 +184,14 @@ extension InboxViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             cell.lineFirstCell.isHidden = false
         }
-        if segment.selectedSegmentIndex == 0{
+        if tapIndex == 0{
             cell.userNameLabel.text = self.matchesModel[indexPath.row].userName ?? ""
             cell.userMessageLabel.text = self.matchesModel[indexPath.row].aboutme ?? ""
             cell.userAvatarImage.sd_setHighlightedImage(with: URL(string: self.matchesModel[indexPath.row].profilePic ?? ""), options: SDWebImageOptions.refreshCached) { (image, error, Cache, url) in
                 if image != nil{
                     cell.userAvatarImage.image = image
                 }else{
-                    cell.userAvatarImage.image = #imageLiteral(resourceName: "profilePlaceholder")
+                    cell.userAvatarImage.image = #imageLiteral(resourceName: "anonymous.jpg")
                 }
             }
         }else{
@@ -205,11 +217,11 @@ extension InboxViewController: UITableViewDataSource {
             // cell.timeLbl.text =  self.getTimeFromTimeInterval(interval: timeStamp)
             //            let getImageUrl = message.userImage
             //            let urlStr = URL(string: getImageUrl ?? "")
-            cell.userAvatarImage.sd_setImage(with: URL(string: (message.userImage ?? "")), placeholderImage: #imageLiteral(resourceName: "profilePlaceholder"), options: .refreshCached) { (image, error, cache, url) in
+            cell.userAvatarImage.sd_setImage(with: URL(string: (message.userImage ?? "")), placeholderImage: #imageLiteral(resourceName: "anonymous.jpg"), options: .refreshCached) { (image, error, cache, url) in
                 if image != nil{
                     cell.userAvatarImage.image = image
                 }else{
-                    cell.userAvatarImage.image = #imageLiteral(resourceName: "profilePlaceholder")
+                    cell.userAvatarImage.image = #imageLiteral(resourceName: "anonymous.jpg")
                 }
             }
             return cell
@@ -224,7 +236,7 @@ extension InboxViewController: UITableViewDelegate {
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if segment.selectedSegmentIndex == 0{
+        if tapIndex == 0{
             let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileVC") as! ProfileViewController
             profileVC.userId = self.matchesModel[indexPath.row].userID ?? ""
             self.navigationController?.pushViewController(profileVC, animated: true)

@@ -26,8 +26,9 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var confirmTextField: AETextFieldValidator!
     @IBOutlet weak var birthDateTextField: AETextFieldValidator!
     @IBOutlet weak var registerButton: RoundedButton!
-    @IBOutlet weak var maleButton: UIButton!
-    @IBOutlet weak var femaleButton: UIButton!
+    
+    @IBOutlet weak var genderButton: UIButton!
+    
     @IBOutlet weak var uploadActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var scrollViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollViewLeadingConstraint: NSLayoutConstraint!
@@ -37,23 +38,24 @@ class SignUpViewController: UIViewController {
     
     // Mark: Variable
     var datePicker = UIDatePicker()
+    var isMale = true
     
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Look Listen & Feel"
-        // Set `gender` curent is male
-        maleButton.isSelected = true
+//        title = "Look Listen & Feel"
         // Hide upload indicator
         uploadActivityIndicator.isHidden = true
         uploadPictureButton.roundRadius()
         // Side menu delegate
         self.sideMenuController()?.sideMenu?.delegate = self
         // Show navigation bar
-        navigationController?.isNavigationBarHidden = false
-        prepareGradient()
+//        navigationController?.isNavigationBarHidden = false
+        navigationController?.setNavigationBarHidden(true, animated: false)
+//        prepareGradient()
         prepareTextField()
         showdatePicker()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +66,18 @@ class SignUpViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    @IBAction func onBack(_ sender: Any) {
+        navigationController!.popViewController(animated: true)
+    }
+    @IBAction func onGenderSwitched(_ sender: Any) {
+        isMale = !isMale
+        if(isMale) {
+            genderButton.setImage(UIImage(named: "toggle_male.png"), for: .normal)
+        }
+        else {
+            genderButton.setImage(UIImage(named: "toggle_female.png"), for: .normal)
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -85,23 +99,25 @@ class SignUpViewController: UIViewController {
     // MARK: - Private methods
     private func prepareGradient() {
         // Set gradient of mainView
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.view.bounds
-        let color = UIColor(hexString: "E51F41")
-        let color1 = UIColor(hexString: "FF7761")
-        gradientLayer.colors = [color1.cgColor, color.cgColor]
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
-        // Set gradient of navigationBar
-        gradientOfNavigationBar()
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.view.bounds
+//        let color = UIColor(hexString: "E51F41")
+//        let color1 = UIColor(hexString: "FF7761")
+//        gradientLayer.colors = [color1.cgColor, color.cgColor]
+//        self.view.layer.insertSublayer(gradientLayer, at: 0)
+//        // Set gradient of navigationBar
+//        gradientOfNavigationBar()
     }
     
     private func prepareNavigationBar() {
         // Added right bar button
-        let moreBarButtonItem = UIBarButtonItem(image: UIImage(named: "more-icon"),
-                                                style: .plain,
-                                                target: self,
-                                                action: #selector(moreBarButtonAction))
-        navigationItem.rightBarButtonItem = moreBarButtonItem
+//        let moreBarButtonItem = UIBarButtonItem(image: UIImage(named: "more-icon"),
+//                                                style: .plain,
+//                                                target: self,
+//                                                action: #selector(moreBarButtonAction))
+//        navigationItem.rightBarButtonItem = moreBarButtonItem
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     private func attributedString(placeHolder: String) -> NSAttributedString {
@@ -257,22 +273,13 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    @IBAction func maleButtonAction(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        femaleButton.isSelected = !sender.isSelected
-    }
-    
-    @IBAction func femaleButtonAction(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        maleButton.isSelected = !sender.isSelected
-    }
     
     //MARK: - API's
     func signUp(){
         let param : Parameters = ["Username": userNameTextField.text ?? "",
                  "email": emailTextField.text ?? "",
                  "Password": passwordTextField.text ?? "",
-                 "Gender": (self.maleButton.isSelected) ? "male" : "female",
+                 "Gender": (self.isMale) ? "male" : "female",
                  "DateofBirth": birthDateTextField.text ?? "",
                  "latitude" : "\(CLLocationManager().location?.coordinate.latitude ?? 0.0)",
             "longitude" : "\(CLLocationManager().location?.coordinate.latitude ?? 0.0)"]

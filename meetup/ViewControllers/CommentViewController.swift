@@ -353,12 +353,13 @@ class CommentViewController: UIViewController
     
     //MARK:- InApp Purchase Methods
     func fetchproducts(){
+        var test = false
         SubscriptionProducts.store.requestProducts({ [weak self] success, products in
             guard self != nil else { return }
             if success {
                 print("Products count: \(products!.count)")
                 self!.products = products!
-                let isPro = SubscriptionProducts.store.isProductPurchased(SubscriptionProducts.subscriptionID)
+                let isPro = SubscriptionProducts.store.isProductPurchased(SubscriptionProducts.subscriptionID) || test
                 standard.set(isPro, forKey: "paymentStatus")
                 print(SubscriptionProducts.subscriptionID, isPro)
             }

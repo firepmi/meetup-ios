@@ -44,7 +44,7 @@ class ChatVC: UIViewController,UITextFieldDelegate ,UIGestureRecognizerDelegate{
     @IBOutlet weak var messageViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet var inboxTableView: UITableView!
     @IBOutlet weak var messageView: UIView!
-    @IBOutlet weak var titileLbl: UILabel!
+//    @IBOutlet weak var titileLbl: UILabel!
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var sendButt: UIButton!
     @IBOutlet weak var messageTxt: UITextView!
@@ -84,10 +84,11 @@ class ChatVC: UIViewController,UITextFieldDelegate ,UIGestureRecognizerDelegate{
             if image != nil{
                 self.profileImg.image = image
             }else{
-                self.profileImg.image = #imageLiteral(resourceName: "profilePlaceholder")
+                self.profileImg.image = #imageLiteral(resourceName: "anonymous.jpg")
             }
         }
-        
+//        titileLbl.text = otherUserName
+        title = otherUserName
     }
     
     
@@ -423,7 +424,8 @@ extension ChatVC: UITableViewDataSource,UITableViewDelegate {
             else{
                 let cell = tableView.dequeueReusableCell(withIdentifier: "InboxCell2", for: indexPath) as! InboxCell2
                 
-                cell.messageView.layer.cornerRadius = 5.0
+                cell.messageView.layer.cornerRadius = 20
+                cell.messageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMinXMaxYCorner]
                 cell.messageView.layer.masksToBounds = true
                 cell.messageLabel?.text = message.text
                 let timeStamp = message.time
@@ -446,7 +448,7 @@ extension ChatVC: UITableViewDataSource,UITableViewDelegate {
                     if image != nil{
                         cell.profileImg.image = image
                     }else{
-                        cell.profileImg.image = #imageLiteral(resourceName: "profilePlaceholder")
+                        cell.profileImg.image = #imageLiteral(resourceName: "anonymous.jpg")
                     }
                 }
                 self.selectIndex = indexPath.section
@@ -459,7 +461,8 @@ extension ChatVC: UITableViewDataSource,UITableViewDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "InboxCell", for: indexPath) as! InboxCell
                 let timeStamp = message.time
                 cell.messageLabel?.text = message.text
-                cell.messageView.layer.cornerRadius = 5.0
+                cell.messageView.layer.cornerRadius = 20
+                cell.messageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner]
                 cell.messageView.layer.masksToBounds = true
                 cell.dateLabel.text = self.getTimeFromTimeInterval(interval: timeStamp)
                 cell.profileImg.layer.cornerRadius = cell.profileImg.frame.width / 2
@@ -468,7 +471,7 @@ extension ChatVC: UITableViewDataSource,UITableViewDelegate {
                     if image != nil{
                         cell.profileImg.image = image
                     }else{
-                        cell.profileImg.image = #imageLiteral(resourceName: "profilePlaceholder")
+                        cell.profileImg.image = #imageLiteral(resourceName: "anonymous.jpg")
                     }
                 }
                 

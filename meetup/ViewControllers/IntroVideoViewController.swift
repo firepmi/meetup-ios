@@ -12,10 +12,13 @@ import AVFoundation
 class IntroVideoViewController: UIViewController
 {
     @IBOutlet weak var videoView: VideoView!
+    @IBOutlet weak var startButton: UIButton!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        startButton.layer.masksToBounds = true
+        startButton.layer.cornerRadius = 20
     }
     override func viewDidAppear(_ animated: Bool) {
 //        AVMakeRect(aspectRatio:CGSize(width: view.frame.width, height: view.frame.height), insideRect: view.frame)
@@ -27,9 +30,14 @@ class IntroVideoViewController: UIViewController
         videoView.play()
         NotificationCenter.default.addObserver(self, selector: #selector(onCompleted(_:)),
         name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        
     }
     @objc func onCompleted(_ notification: Notification){
-        AppState.presentLogin()
-        standard.set(true, forKey: "welcome")
+//        AppState.presentLogin()
+        videoView.isHidden = true
     }    
+    @IBAction func onStartButton(_ sender: Any) {
+        standard.set(true, forKey: "welcome")
+        AppState.presentLogin()
+    }
 }

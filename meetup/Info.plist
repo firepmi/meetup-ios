@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>MeetUp</string>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -104,6 +104,11 @@
 		<string>SF-Pro-Text-Regular.otf</string>
 		<string>SF-Pro-Text-Semibold.otf</string>
 		<string>Syabab FREE TESTER.ttf</string>
+		<string>Uniform-Black.otf</string>
+		<string>Uniform-Bold.otf</string>
+		<string>Uniform-Ultra.otf</string>
+		<string>Uniform-Medium.otf</string>
+		<string>Uniform-Light.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

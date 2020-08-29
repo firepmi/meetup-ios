@@ -20,8 +20,8 @@ extension UIViewController {
     
     func gradientOfNavigationBar() {
         var colors = [UIColor]()
-        colors.append(UIColor(hexString: "FF7761"))
-        colors.append(UIColor(hexString: "E51F41"))
+        colors.append(UIColor(hexString: "ffffff")) //FF7761
+        colors.append(UIColor(hexString: "ffffff")) //E51F41
         navigationController?.navigationBar.setGradientBackground(colors: colors)
     }
 }

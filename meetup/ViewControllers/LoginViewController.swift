@@ -26,7 +26,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var facebookButton: UIButton!
     @IBOutlet weak var forgotPwdButton: UIButton!
     @IBOutlet weak var contentViewHeightConstraint: NSLayoutConstraint!
-    
+        
     // MARK: - View life cycle
     override func viewDidLoad()
     {
@@ -101,6 +101,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate
     {
     }
     
+    @IBAction func onShowPassword(_ sender: Any) {
+        passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
+    }
     //MARK: - API's
     //function to loginApi
     func loginApi(loginType: String,url: String){
