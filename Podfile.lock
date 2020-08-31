@@ -74,6 +74,7 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
     - GTMSessionFetcher/Core (~> 1.1)
+  - FSPagerView (0.8.3)
   - GoogleAppMeasurement (6.1.5):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -125,6 +126,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - PinterestLayout (1.0.3)
   - RangeSeekSlider (1.8.0)
   - SDWebImage (5.3.1):
     - SDWebImage/Core (= 5.3.1)
@@ -143,11 +145,13 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - FSPagerView
   - GoogleSignIn
   - InputBarAccessoryView (= 4.2.2)
   - IQKeyboardManager
   - LocationPickerViewController
   - MessageKit
+  - PinterestLayout
   - RangeSeekSlider
   - SDWebImage
   - SwiftyJSON
@@ -173,6 +177,7 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseInstanceID
     - FirebaseStorage
+    - FSPagerView
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
@@ -186,6 +191,7 @@ SPEC REPOS:
     - LocationPickerViewController
     - MessageKit
     - nanopb
+    - PinterestLayout
     - RangeSeekSlider
     - SDWebImage
     - SwiftyJSON
@@ -210,6 +216,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 963515d232ded06f36f6ce830507c94551866170
   FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
   FirebaseStorage: b7c6d00997bc21d4465453bdcc5cc65513110fed
+  FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
   GoogleAppMeasurement: 037f46d1d8ae8b312720f1042585ab961a1289e3
   GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
   GoogleDataTransportCCTSupport: ef79a4728b864946a8aafdbab770d5294faf3b5f
@@ -223,11 +230,12 @@ SPEC CHECKSUMS:
   LocationPickerViewController: 4f33d63587bca682267a09779de2b2e09cf5b8e2
   MessageKit: e892a9ca49ebe6d82684d3a93ad84021fa23e2c6
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  PinterestLayout: f1c7ec0254ffa842d69f1b43e4436c8ded4359b9
   RangeSeekSlider: 650b11fa1edcb92e1e0ede797669d98622570fb5
   SDWebImage: 7137d57385fb632129838c1e6ab9528a22c666cc
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   VerticalCardSwiper: 515b67e281731293cdf69d96904d67091389a1b4
 
-PODFILE CHECKSUM: ab1b0a9bab572dd63830288216c6b77d78b84c3e
+PODFILE CHECKSUM: 37809a8aee22980ed206cbf4ef1dbb7d61809a23
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

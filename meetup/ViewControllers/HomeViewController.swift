@@ -63,10 +63,16 @@ class HomeViewController: UIViewController {
             tutorialView.isHidden = true
         }
         else {
+            showIntroSlide()
             tutorialView.isHidden = false
         }
         
         navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    func showIntroSlide() {
+        let introSilder = storyboard!.instantiateViewController(withIdentifier: "intro_slide")
+        introSilder.modalPresentationStyle = .fullScreen
+        present(introSilder, animated: false, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

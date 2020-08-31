@@ -48,5 +48,6 @@ pod 'Firebase/Storage'
 pod 'Firebase/Auth'
 
   # Pods for meetup
-
+pod 'PinterestLayout'
+pod 'FSPagerView'
 end

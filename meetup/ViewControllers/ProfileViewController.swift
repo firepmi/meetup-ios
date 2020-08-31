@@ -11,6 +11,7 @@ import SwiftyJSON
 import AVKit
 import MobileCoreServices
 import SDWebImage
+import PinterestLayout
 
 class ProfileViewController: UIViewController {
     
@@ -33,7 +34,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var unlikeButton: UIButton!
 //    @IBOutlet weak var heartButton: UIButton!
-    @IBOutlet weak var recordButton: UIButton!
+//    @IBOutlet weak var recordButton: UIButton!
 //    @IBOutlet weak var instagramNameLabel: UILabel!
 //    @IBOutlet weak var facebookNameLabel: UILabel!
 //    @IBOutlet weak var googlePlusNameLabel: UILabel!
@@ -41,9 +42,10 @@ class ProfileViewController: UIViewController {
 //    @IBOutlet weak var bottomStackView: UIStackView!
     @IBOutlet weak var contentTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var contentLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var videoImage: UIImageView!
+//    @IBOutlet weak var videoImage: UIImageView!
     @IBOutlet weak var onlineStatusView: RoundedView!
     
+    @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Variables
     var spacingOfScrollView: CGFloat = 15
@@ -66,6 +68,14 @@ class ProfileViewController: UIViewController {
         addSwipeGeture()
         prepareNavigationBar()
         fetchUserProfile()
+        initPinterestLayout()
+    }
+    func initPinterestLayout() {
+        let layout = PinterestLayout()
+        collectionView.collectionViewLayout = layout
+        layout.delegate = self
+        layout.cellPadding = 5
+        layout.numberOfColumns = 2
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -150,13 +160,13 @@ class ProfileViewController: UIViewController {
 //        self.percentHeartLabel.text = (self.model.favouritePercentage ?? "0")
 //        self.jobLabel.text = self.model.bodyType ?? ""
         self.locationNameLabel.text = self.model.address ?? ""
-        self.videoImage.sd_setImage(with: URL(string: self.model.videoImage ?? ""), placeholderImage: #imageLiteral(resourceName: "crop"), options: .refreshCached) { (image, error, cache, url) in
-            if image != nil{
-                self.videoImage.image = image
-            }else{
-                self.videoImage.image = #imageLiteral(resourceName: "crop")
-            }
-        }
+//        self.videoImage.sd_setImage(with: URL(string: self.model.videoImage ?? ""), placeholderImage: #imageLiteral(resourceName: "crop"), options: .refreshCached) { (image, error, cache, url) in
+//            if image != nil{
+//                self.videoImage.image = image
+//            }else{
+//                self.videoImage.image = #imageLiteral(resourceName: "crop")
+//            }
+//        }
 //        self.instagramNameLabel.text = self.model.instagramUrl ?? ""
 //        self.facebookNameLabel.text = self.model.facebookUrl ?? ""
 //        self.googlePlusNameLabel.text = self.model.googleplusUrl ?? ""
@@ -322,5 +332,47 @@ extension ProfileViewController: ENSideMenuDelegate {
         print("sideMenuDidOpen")
     }
 }
-
+extension ProfileViewController: PinterestLayoutDelegate,UICollectionViewDataSource {
+//    func collectionView(collectionView: UICollectionView,
+//                        heightForImageAtIndexPath indexPath: IndexPath,
+//                        withWidth: CGFloat) -> CGFloat {
+//        let image = UIImage(named: "anonymous.jpg")//images[indexPath.item]
+//
+//        return image!.height(forWidth: withWidth)
+//    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath)
+        let imageView = cell.viewWithTag(100) as! UIImageView
+        imageView.image = UIImage(named: "anonymous.jpg")
+        return cell
+    }
+    func collectionView(collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
+        let image = UIImage(named: "anonymous.jpg")//images[indexPath.item]
+        var height:CGFloat = image!.height(forWidth: withWidth)
+        switch indexPath.row % 5 {
+        case 0:
+            height = 100
+        case 1:
+            height = 160
+        case 2:
+            height = 100
+        case 3:
+            height = 160
+        case 4:
+            height = 100
+        default:
+            break
+        }
+        return height
+    }
+    func collectionView(collectionView: UICollectionView,
+                        heightForAnnotationAtIndexPath indexPath: IndexPath,
+                        withWidth: CGFloat) -> CGFloat {
+        let textFont = UIFont(name: "Arial-ItalicMT", size: 11)!
+        return "Some text".heightForWidth(width: withWidth, font: textFont)
+    }
+}
 
