@@ -333,13 +333,6 @@ extension ProfileViewController: ENSideMenuDelegate {
     }
 }
 extension ProfileViewController: PinterestLayoutDelegate,UICollectionViewDataSource {
-//    func collectionView(collectionView: UICollectionView,
-//                        heightForImageAtIndexPath indexPath: IndexPath,
-//                        withWidth: CGFloat) -> CGFloat {
-//        let image = UIImage(named: "anonymous.jpg")//images[indexPath.item]
-//
-//        return image!.height(forWidth: withWidth)
-//    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }

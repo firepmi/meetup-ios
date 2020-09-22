@@ -81,7 +81,7 @@
         })
     }
     
-    func requestMultiPartURLVideo(_ strURL : String, params : [String : AnyObject]?, headers : [String : String]? , VideoURL: URL?, videoName: String,  success:@escaping (JSON) -> Void, failure:@escaping (String) -> Void){
+    func requestMultiPartURLVideo(_ strURL : String, params : [String : AnyObject]?, headers : [String : String]? , VideoURL: URL?, videoName: String,  success:@escaping (JSON) -> Void, progressUpdate:@escaping (Double) -> Void, failure:@escaping (String) -> Void){
         
         Alamofire.upload(multipartFormData: { (multipartFormData) in
             
@@ -109,6 +109,7 @@
             case .success(let upload, _ ,_ ):
                 upload.uploadProgress(closure: { (progress) in
                     print (progress.fractionCompleted * 100)
+                    progressUpdate(progress.fractionCompleted * 100)
                 })
                 upload.responseJSON { response in
                     let resJson = JSON(response.result.value ?? Dictionary<String, Any>())

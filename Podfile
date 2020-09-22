@@ -51,3 +51,13 @@ pod 'Firebase/Auth'
 pod 'PinterestLayout'
 pod 'FSPagerView'
 end
+
+DEFAULT_SWIFT_VERSION = '5.3'
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = DEFAULT_SWIFT_VERSION
+    end
+  end
+end

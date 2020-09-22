@@ -29,11 +29,10 @@ class ApiInteraction : NSObject{
             failure(error)
         }
     }
-    
-    func funcToHitVideoMultipartApi(url: String, param: [String: Any]?,header: [String: Any], videoPath: URL?, videoName: String, success: @escaping (JSON)-> Void, failure: @escaping (String)-> Void){
+    func funcToHitVideoMultipartApi(url: String, param: [String: Any]?,header: [String: Any], videoPath: URL?, videoName: String, success: @escaping (JSON)-> Void, progressUpdate: @escaping (Double)-> Void, failure: @escaping (String)-> Void){
         ApiManager.sharedInstance.requestMultiPartURLVideo(url, params: param as [String : AnyObject]?, headers: header as? [String : String], VideoURL: videoPath, videoName: videoName, success: { (json) in
             success(json)
-        }) { (error) in
+        }, progressUpdate: progressUpdate) { (error) in
             failure(error)
         }
     }
@@ -58,7 +57,6 @@ class ApiInteraction : NSObject{
             failure(error)
         }
     }
-    
     func funcToGetApi(url: String, param: [String: Any]?, header: [String: Any], success: @escaping (JSON)-> Void, failure: @escaping (String)-> Void){
         ApiManager.sharedInstance.requestGetURL(url, params: param as [String : AnyObject]?, headers: header as? [String : String], success: { (json) in
             success(json)

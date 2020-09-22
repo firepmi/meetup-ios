@@ -373,8 +373,10 @@ class ChatVC: UIViewController,UITextFieldDelegate ,UIGestureRecognizerDelegate{
                 case .notDetermined:
                     // won't happen but still
                     break
+                default: break
                 }
             }
+        default: break
         }
     }
 }

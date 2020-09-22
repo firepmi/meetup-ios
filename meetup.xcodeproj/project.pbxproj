@@ -122,6 +122,10 @@
 		FC79AE1324D09CB8000EEF68 /* switch_no.png in Resources */ = {isa = PBXBuildFile; fileRef = FC79AE1124D09CB8000EEF68 /* switch_no.png */; };
 		FC79AE1624D11FDD000EEF68 /* switch_inbox_matches.png in Resources */ = {isa = PBXBuildFile; fileRef = FC79AE1424D11FDB000EEF68 /* switch_inbox_matches.png */; };
 		FC79AE1724D11FDD000EEF68 /* switch_inbox_messages.png in Resources */ = {isa = PBXBuildFile; fileRef = FC79AE1524D11FDC000EEF68 /* switch_inbox_messages.png */; };
+		FC7D347524FD404600B20D46 /* RoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D347424FD404600B20D46 /* RoundedTextField.swift */; };
+		FC7D347824FD44D600B20D46 /* icon_add.png in Resources */ = {isa = PBXBuildFile; fileRef = FC7D347624FD44D500B20D46 /* icon_add.png */; };
+		FC7D347924FD44D600B20D46 /* icon_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = FC7D347724FD44D600B20D46 /* icon_delete.png */; };
+		FC7D347B24FD480E00B20D46 /* UploadVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D347A24FD480E00B20D46 /* UploadVideoViewController.swift */; };
 		FCDB598324D3AB8E000ACEA9 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = FCDB598024D3AB6B000ACEA9 /* icon_close.png */; };
 		FCDB598424D3AB8E000ACEA9 /* icon_not_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = FCDB598124D3AB80000ACEA9 /* icon_not_selected.png */; };
 		FCDB598524D3AB8E000ACEA9 /* icon_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = FCDB598224D3AB8E000ACEA9 /* icon_selected.png */; };
@@ -130,6 +134,8 @@
 		FCDD4A7524FBAFE500400B0B /* intro2.png in Resources */ = {isa = PBXBuildFile; fileRef = FCDD4A7124FBAFE400400B0B /* intro2.png */; };
 		FCDD4A7624FBAFE500400B0B /* intro3.png in Resources */ = {isa = PBXBuildFile; fileRef = FCDD4A7224FBAFE500400B0B /* intro3.png */; };
 		FCDD4A7724FBAFE500400B0B /* intro4.png in Resources */ = {isa = PBXBuildFile; fileRef = FCDD4A7324FBAFE500400B0B /* intro4.png */; };
+		FCE9F97C24FD01DB000B0A9D /* bg_video.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FCE9F97B24FD01DA000B0A9D /* bg_video.jpg */; };
+		FCE9F97E24FD0E1D000B0A9D /* RoundedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE9F97D24FD0E19000B0A9D /* RoundedTextView.swift */; };
 		FCECF3E124D2CA76008F2972 /* ReportDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCECF3E024D2CA75008F2972 /* ReportDialogViewController.swift */; };
 		FCECF3E624D2DD1F008F2972 /* icon_inappropriate_videos.png in Resources */ = {isa = PBXBuildFile; fileRef = FCECF3E224D2DD1D008F2972 /* icon_inappropriate_videos.png */; };
 		FCECF3E724D2DD1F008F2972 /* icon_spam.png in Resources */ = {isa = PBXBuildFile; fileRef = FCECF3E324D2DD1E008F2972 /* icon_spam.png */; };
@@ -259,6 +265,10 @@
 		FC79AE1124D09CB8000EEF68 /* switch_no.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch_no.png; sourceTree = "<group>"; };
 		FC79AE1424D11FDB000EEF68 /* switch_inbox_matches.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch_inbox_matches.png; sourceTree = "<group>"; };
 		FC79AE1524D11FDC000EEF68 /* switch_inbox_messages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch_inbox_messages.png; sourceTree = "<group>"; };
+		FC7D347424FD404600B20D46 /* RoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedTextField.swift; sourceTree = "<group>"; };
+		FC7D347624FD44D500B20D46 /* icon_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_add.png; sourceTree = "<group>"; };
+		FC7D347724FD44D600B20D46 /* icon_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_delete.png; sourceTree = "<group>"; };
+		FC7D347A24FD480E00B20D46 /* UploadVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadVideoViewController.swift; sourceTree = "<group>"; };
 		FCD11E5124C3455600591D5D /* LogoVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LogoVideo.mp4; sourceTree = "<group>"; };
 		FCDB598024D3AB6B000ACEA9 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		FCDB598124D3AB80000ACEA9 /* icon_not_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_not_selected.png; sourceTree = "<group>"; };
@@ -268,6 +278,8 @@
 		FCDD4A7124FBAFE400400B0B /* intro2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro2.png; sourceTree = "<group>"; };
 		FCDD4A7224FBAFE500400B0B /* intro3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro3.png; sourceTree = "<group>"; };
 		FCDD4A7324FBAFE500400B0B /* intro4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro4.png; sourceTree = "<group>"; };
+		FCE9F97B24FD01DA000B0A9D /* bg_video.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_video.jpg; sourceTree = "<group>"; };
+		FCE9F97D24FD0E19000B0A9D /* RoundedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedTextView.swift; sourceTree = "<group>"; };
 		FCECF3E024D2CA75008F2972 /* ReportDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportDialogViewController.swift; sourceTree = "<group>"; };
 		FCECF3E224D2DD1D008F2972 /* icon_inappropriate_videos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_inappropriate_videos.png; sourceTree = "<group>"; };
 		FCECF3E324D2DD1E008F2972 /* icon_spam.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_spam.png; sourceTree = "<group>"; };
@@ -437,14 +449,15 @@
 				8B00F9D22296B43F00E9C1FF /* ChatViewController.swift */,
 				8B00F9D32296B43F00E9C1FF /* InboxViewController.swift */,
 				8B00F9D42296B43F00E9C1FF /* LocationViewController.swift */,
+				8B00F9DC2296B43F00E9C1FF /* ProfileViewController.swift */,
 				8B00F9D52296B43F00E9C1FF /* EditProfileViewController.swift */,
+				FC7D347A24FD480E00B20D46 /* UploadVideoViewController.swift */,
 				8B00F9D62296B43F00E9C1FF /* ForgotPasswordViewController.swift */,
 				8B00F9D72296B43F00E9C1FF /* HomeViewController.swift */,
 				8B00F9D82296B43F00E9C1FF /* ReplyCommentViewController.swift */,
 				8B00F9D92296B43F00E9C1FF /* WebViewController.swift */,
 				8B00F9DA2296B43F00E9C1FF /* ChatVC.swift */,
 				8B00F9DB2296B43F00E9C1FF /* LoginViewController.swift */,
-				8B00F9DC2296B43F00E9C1FF /* ProfileViewController.swift */,
 				8B00F9DD2296B43F00E9C1FF /* CommentViewController.swift */,
 				8B00F9DE2296B43F00E9C1FF /* MyNavigationController.swift */,
 				8B00F9E02296B43F00E9C1FF /* MenuViewController.swift */,
@@ -489,6 +502,8 @@
 				8B00F9EF2296B43F00E9C1FF /* IndexTableViewCell.swift */,
 				8B00F9F02296B43F00E9C1FF /* MenuTableViewCell.swift */,
 				8B00F9F12296B43F00E9C1FF /* RoundedView.swift */,
+				FCE9F97D24FD0E19000B0A9D /* RoundedTextView.swift */,
+				FC7D347424FD404600B20D46 /* RoundedTextField.swift */,
 				8B00F9F22296B43F00E9C1FF /* CommentTableViewCell.swift */,
 				8B00F9F32296B43F00E9C1FF /* CommentTableViewCell.xib */,
 				8B00F9F42296B43F00E9C1FF /* RateCollectionViewCell.swift */,
@@ -540,6 +555,9 @@
 		FC506F952450D3E700CE4E34 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				FC7D347624FD44D500B20D46 /* icon_add.png */,
+				FC7D347724FD44D600B20D46 /* icon_delete.png */,
+				FCE9F97B24FD01DA000B0A9D /* bg_video.jpg */,
 				FCDD4A7024FBAFE300400B0B /* intro1.png */,
 				FCDD4A7124FBAFE400400B0B /* intro2.png */,
 				FCDD4A7224FBAFE500400B0B /* intro3.png */,
@@ -620,7 +638,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = developer;
 				TargetAttributes = {
 					8B00F98A2296AF2700E9C1FF = {
@@ -688,6 +706,7 @@
 				FC04396824C0E4A400B036C8 /* icon_restore.png in Resources */,
 				FC04397424C14AEF00B036C8 /* icon_menu.png in Resources */,
 				FC506FA32450D5A500CE4E34 /* icon_finger_down.png in Resources */,
+				FCE9F97C24FD01DB000B0A9D /* bg_video.jpg in Resources */,
 				FC04396024BFF61300B036C8 /* bg_login.png in Resources */,
 				FCF08C6124CB3A38004EB849 /* anonymous.jpg in Resources */,
 				FCECF3E824D2DD1F008F2972 /* icon_inappropriate_message.png in Resources */,
@@ -706,6 +725,7 @@
 				8B00FA362296B43F00E9C1FF /* CommentTableViewCell.xib in Resources */,
 				8B00FA2E2296B43F00E9C1FF /* RateCollectionViewCell.xib in Resources */,
 				FC04396724C0E4A400B036C8 /* icon_purchase.png in Resources */,
+				FC7D347824FD44D600B20D46 /* icon_add.png in Resources */,
 				FC61617E243C196300522ABD /* GoogleService-Info.plist in Resources */,
 				FC79AE1724D11FDD000EEF68 /* switch_inbox_messages.png in Resources */,
 				FC04395D24BFF58700B036C8 /* icon_txt_password.png in Resources */,
@@ -715,6 +735,7 @@
 				FC04396F24C0F2E500B036C8 /* icon_heart.png in Resources */,
 				FC5EF83824CB5E9E00E1C28B /* icon_body.png in Resources */,
 				FCDB598324D3AB8E000ACEA9 /* icon_close.png in Resources */,
+				FC7D347924FD44D600B20D46 /* icon_delete.png in Resources */,
 				FC04397224C0F2E500B036C8 /* icon_calendar.png in Resources */,
 				FCDD4A7424FBAFE500400B0B /* intro1.png in Resources */,
 			);
@@ -790,12 +811,14 @@
 				8B00FA1C2296B43F00E9C1FF /* EditProfileViewController.swift in Sources */,
 				FC3574C524FB9F9E0067D9A3 /* IntroSliderViewController.swift in Sources */,
 				8B00FA182296B43F00E9C1FF /* SignUpViewController.swift in Sources */,
+				FCE9F97E24FD0E1D000B0A9D /* RoundedTextView.swift in Sources */,
 				8B00FA1F2296B43F00E9C1FF /* ReplyCommentViewController.swift in Sources */,
 				8B00FA132296B43F00E9C1FF /* UISwitch.swift in Sources */,
 				8B00FA162296B43F00E9C1FF /* UINavigationController.swift in Sources */,
 				8B00FA022296B43F00E9C1FF /* MatchesModel.swift in Sources */,
 				8B00FA232296B43F00E9C1FF /* ProfileViewController.swift in Sources */,
 				8B00FA002296B43F00E9C1FF /* Conversation.swift in Sources */,
+				FC7D347524FD404600B20D46 /* RoundedTextField.swift in Sources */,
 				8B00FA372296B43F00E9C1FF /* RateCollectionViewCell.swift in Sources */,
 				8B00FA342296B43F00E9C1FF /* RoundedView.swift in Sources */,
 				8B00FA302296B43F00E9C1FF /* ReplyCommentTableViewCell.swift in Sources */,
@@ -834,6 +857,7 @@
 				8B00FA292296B43F00E9C1FF /* Constant.swift in Sources */,
 				8B2E02CA22A4EC48009B3B83 /* ContactUsViewController.swift in Sources */,
 				8B9A5D3322A642D700962FA8 /* BodyModel.swift in Sources */,
+				FC7D347B24FD480E00B20D46 /* UploadVideoViewController.swift in Sources */,
 				8B00FA1E2296B43F00E9C1FF /* HomeViewController.swift in Sources */,
 				8B00FA172296B43F00E9C1FF /* CAGradientLayer.swift in Sources */,
 				8B00FA0F2296B43F00E9C1FF /* UIColor.swift in Sources */,
@@ -899,6 +923,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -961,6 +986,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
