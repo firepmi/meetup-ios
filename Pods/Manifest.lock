@@ -20,6 +20,7 @@ PODS:
     - FBSDKLoginKit/Login (= 7.1.1)
   - FBSDKLoginKit/Login (7.1.1):
     - FBSDKCoreKit (~> 7.1.1)
+  - FeetInchDelegate (0.1.1)
   - Firebase/Auth (6.32.2):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.9.1)
@@ -110,6 +111,7 @@ PODS:
     - GTMSessionFetcher/Core (= 1.4.0)
   - InputBarAccessoryView (4.2.2)
   - IQKeyboardManager (6.5.6)
+  - KMPlaceholderTextView (1.4.0)
   - leveldb-library (1.22)
   - LocationPickerViewController (3.4)
   - MessageKit (3.0.0):
@@ -135,6 +137,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - FBSDKLoginKit
+  - FeetInchDelegate
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -143,6 +146,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - InputBarAccessoryView (= 4.2.2)
   - IQKeyboardManager
+  - KMPlaceholderTextView
   - LocationPickerViewController
   - MessageKit
   - PinterestLayout
@@ -161,6 +165,7 @@ SPEC REPOS:
     - Fabric
     - FBSDKCoreKit
     - FBSDKLoginKit
+    - FeetInchDelegate
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -178,6 +183,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - InputBarAccessoryView
     - IQKeyboardManager
+    - KMPlaceholderTextView
     - leveldb-library
     - LocationPickerViewController
     - MessageKit
@@ -198,6 +204,7 @@ SPEC CHECKSUMS:
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FBSDKCoreKit: b46507dc8b8cefed31d644e74d7cc30e2a715ef8
   FBSDKLoginKit: 1a61d79e2b25e2fc0d03dccab1e34b38bbdf2546
+  FeetInchDelegate: bb481626ea039e175f4aa41e404d25ea888095a1
   Firebase: 47176280bfba198e531f909cfb1612dad216cb96
   FirebaseAnalytics: 3c2fee6a922023ccfda7af87e4e641bad1fc11ba
   FirebaseAuth: f7b269b33c1e842a35400ddc9bbc8b03cdc47ba3
@@ -215,6 +222,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   InputBarAccessoryView: 2b937602598e2fab3149f37f51dd7ad795653812
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
+  KMPlaceholderTextView: 2206c3df39979e9396e2d96fa9f427a8951121b0
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   LocationPickerViewController: 4f33d63587bca682267a09779de2b2e09cf5b8e2
   MessageKit: e892a9ca49ebe6d82684d3a93ad84021fa23e2c6
@@ -226,6 +234,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   VerticalCardSwiper: 515b67e281731293cdf69d96904d67091389a1b4
 
-PODFILE CHECKSUM: f118d2ed9a51f79962e59ad249114217cedbc9b8
+PODFILE CHECKSUM: dcd39bcf26b45384f27a2d02d0b90026a8bfc577
 
 COCOAPODS: 1.9.3

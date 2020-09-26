@@ -32,7 +32,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate
     {
         super.viewDidLoad()
         prepareTextField()
-        prepareUIView()
+//        prepareUIView()
         self.userNameTextField.addRegx(usernameRegex, withMsg: "UserName cannot be empty and also cannot contain Spaces")
         self.passwordTextField.addRegx(passwordRegex, withMsg: "Password must contain alpha numeric characters.")
         GIDSignIn.sharedInstance()?.delegate = self
@@ -60,17 +60,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate
         passwordTextField.delegate = self
     }
     
-    private func prepareUIView()
-    {
-        if Is_Iphone6Plus
-        {
-            contentViewHeightConstraint.constant = 716
-        }
-        if Is_Iphone6
-        {
-            contentViewHeightConstraint.constant = 647
-        }
-    }
+//    private func prepareUIView()
+//    {
+////        if Is_Iphone6Plus
+////        {
+////            contentViewHeightConstraint.constant = 716
+////        }
+////        if Is_Iphone6
+////        {
+////            contentViewHeightConstraint.constant = 647
+////        }
+//    }
     
     //MARK: - IBActions
     @IBAction func loginButtonAction(_ sender: UIButton)

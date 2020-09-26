@@ -207,6 +207,9 @@ extension InboxViewController: UITableViewDataSource {
             //                cell.userMessageLabel.text = "Media"
             //            }
             //             cell.userAvatarImage.image = self.items[indexPath.row].
+            if indexPath.row >= self.filterMessage.count {
+                return cell
+            }
             let message = self.filterMessage[indexPath.row]
             
             

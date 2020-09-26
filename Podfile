@@ -50,6 +50,9 @@ pod 'Firebase/Auth'
   # Pods for meetup
 pod 'PinterestLayout'
 pod 'FSPagerView'
+pod 'KMPlaceholderTextView'
+pod 'FeetInchDelegate'
+
 end
 
 DEFAULT_SWIFT_VERSION = '5.3'

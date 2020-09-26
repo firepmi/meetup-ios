@@ -46,7 +46,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var onlineStatusView: RoundedView!
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var userImageHeightConstraint: NSLayoutConstraint!
+    var images = [JSON]()
     // MARK: - Variables
     var spacingOfScrollView: CGFloat = 15
     var model = ProfileModel.init(json: JSON(JSON.self))
@@ -88,7 +89,25 @@ class ProfileViewController: UIViewController {
         super.viewWillDisappear(animated)
         hideSideMenuView()
     }
-    
+    override func viewDidDisappear(_ animated: Bool) {
+        getImages()
+    }
+    func getImages(){
+        let param : Parameters = ["user_id": standard.string(forKey: "userId") ?? ""]
+        ApiInteraction.sharedInstance.funcToHitApi(url: apiURL + "getImages", param: param, header: [:], success: { (json) in
+            print(json)
+            if json["status"].intValue == 1{
+                self.images = json["res"].arrayValue
+                self.collectionView.reloadData()
+            }else{
+                self.showalert(msg: json["message"].stringValue)
+            }
+            self.view.stopProgresshub()
+        }) { (error) in
+            print(error)
+            self.view.stopProgresshub()
+        }
+    }
     // MARK: - Objc Methods
     @objc func moreBarButtonAction() {
         toggleSideMenuView()
@@ -160,17 +179,6 @@ class ProfileViewController: UIViewController {
 //        self.percentHeartLabel.text = (self.model.favouritePercentage ?? "0")
 //        self.jobLabel.text = self.model.bodyType ?? ""
         self.locationNameLabel.text = self.model.address ?? ""
-//        self.videoImage.sd_setImage(with: URL(string: self.model.videoImage ?? ""), placeholderImage: #imageLiteral(resourceName: "crop"), options: .refreshCached) { (image, error, cache, url) in
-//            if image != nil{
-//                self.videoImage.image = image
-//            }else{
-//                self.videoImage.image = #imageLiteral(resourceName: "crop")
-//            }
-//        }
-//        self.instagramNameLabel.text = self.model.instagramUrl ?? ""
-//        self.facebookNameLabel.text = self.model.facebookUrl ?? ""
-//        self.googlePlusNameLabel.text = self.model.googleplusUrl ?? ""
-//        self.youtubeNameLabel.text = self.model.youtubeUrl ?? ""
         self.onlineStatusView.isHidden = ((self.model.onlineStatus ?? "") == "0")
     }
     
@@ -182,9 +190,6 @@ class ProfileViewController: UIViewController {
     
     @IBAction func unlikeButtonAction(_ sender: UIButton) {
     }
-    
-//    @IBAction func heartButtonAction(_ sender: UIButton) {
-//    }
     
     @IBAction func recordButtonAction(_ sender: UIButton) {
         if String(self.model.vedioUrl!.prefix(4)) != "http" {
@@ -202,36 +207,7 @@ class ProfileViewController: UIViewController {
             }
         }
     }
-    
-    
-//    @IBAction func openInsta(_ sender: Any) {
-//        guard ((self.instagramNameLabel.text ?? "") != "")else{
-//            return
-//        }
-//        AppState.openURL(app: "Instagram", userName: self.instagramNameLabel.text ?? "")
-//    }
-//
-//    @IBAction func openFacebook(_ sender: Any) {
-//        guard ((self.facebookNameLabel.text ?? "") != "")else{
-//            return
-//        }
-//        AppState.openURL(app: "Facebook", userName: self.facebookNameLabel.text ?? "")
-//    }
-//
-//    @IBAction func openGooglePlus(_ sender: Any) {
-//        guard ((self.googlePlusNameLabel.text ?? "") != "")else{
-//            return
-//        }
-//        AppState.openURL(app: "Googleplus", userName: self.googlePlusNameLabel.text ?? "")
-//    }
-//
-//    @IBAction func openYouTube(_ sender: Any) {
-//        guard ((self.youtubeNameLabel.text ?? "") != "")else{
-//            return
-//        }
-//        AppState.openURL(app: "Youtube", userName: self.youtubeNameLabel.text ?? "")
-//    }
-//
+        
 //    @IBAction func messageAction(_ sender: Any) {
 //
 //        let chatVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
@@ -297,7 +273,7 @@ extension ProfileViewController: UIScrollViewDelegate {
         if( newHeight < 150) {
             newHeight = 150
         }
-        userImageView.frame = CGRect(x: userImageView.frame.minX, y: userImageView.frame.minY, width: userImageView.frame.width, height: newHeight)
+        userImageHeightConstraint.constant = newHeight
     }
 }
 // MARK: - ENSideMenuDelegate -
@@ -334,17 +310,18 @@ extension ProfileViewController: ENSideMenuDelegate {
 }
 extension ProfileViewController: PinterestLayoutDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return images.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath)
         let imageView = cell.viewWithTag(100) as! UIImageView
-        imageView.image = UIImage(named: "anonymous.jpg")
+        let imageUrl = "\(imageURL)\(images[indexPath.row]["image"].stringValue)"
+        print(imageUrl)
+        imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "anonymous.jpg"))
         return cell
     }
     func collectionView(collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
-        let image = UIImage(named: "anonymous.jpg")//images[indexPath.item]
-        var height:CGFloat = image!.height(forWidth: withWidth)
+        var height:CGFloat = 0
         switch indexPath.row % 5 {
         case 0:
             height = 100

@@ -31,6 +31,7 @@ let baseURL = "http://looklistenandfeel.online/"
 //let baseURL = "http://192.168.1.238/api/"
 //let baseURL = "http://3.8.95.229/"
 let apiURL = "\(baseURL)api/"
+let imageURL = "\(baseURL)app/webroot/img/user_profile_pics/"
 let SocialUrl = ""
 let standard = UserDefaults.standard
 

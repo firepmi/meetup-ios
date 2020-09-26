@@ -53,7 +53,7 @@ public class ProfileModel: NSCoding {
   public var onlineStatus: String?
   public var userAge: Int?
   public var Aboutme: String?
-  public var DateOfBirth: String?
+  public var DateOfBirth: Int?
   public var videoImage: String?
   // MARK: SwiftyJSON Initalizers
   /**
@@ -90,7 +90,7 @@ public class ProfileModel: NSCoding {
     onlineStatus = json[kProfileModelOnlineStatusKey].string
     userAge = json[kProfileModelUserAgeKey].int
     Aboutme = json[kProfileModelAboutmeKey].string
-    DateOfBirth = json[kProfileModelDateOfBirthKey].string
+    DateOfBirth = json[kProfileModelDateOfBirthKey].int
     videoImage = json[kProfileModelvideoImageKey].string
   }
 
@@ -145,7 +145,7 @@ public class ProfileModel: NSCoding {
     self.onlineStatus = aDecoder.decodeObject(forKey: kProfileModelOnlineStatusKey) as? String
     self.userAge = aDecoder.decodeObject(forKey: kProfileModelUserAgeKey) as? Int
     self.Aboutme = aDecoder.decodeObject(forKey: kProfileModelAboutmeKey) as? String
-    self.DateOfBirth = aDecoder.decodeObject(forKey: kProfileModelDateOfBirthKey) as? String
+    self.DateOfBirth = aDecoder.decodeObject(forKey: kProfileModelDateOfBirthKey) as? Int
     self.videoImage = aDecoder.decodeObject(forKey: kProfileModelvideoImageKey) as? String
   }
 

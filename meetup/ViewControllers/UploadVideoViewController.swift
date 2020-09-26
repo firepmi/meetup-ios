@@ -37,6 +37,7 @@ class UploadVideoViewController: UIViewController
         self.present(alert, animated: true, completion: nil)
     }
     @IBAction func onBack(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     @IBAction func onSave(_ sender: Any) {
         if titleTextField.text?.count == 0 {

@@ -15,6 +15,7 @@ import CoreLocation
 import MobileCoreServices
 import SDWebImage
 import PinterestLayout
+import FeetInchDelegate
 
 class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate , UINavigationControllerDelegate, UITextViewDelegate {
 
@@ -28,9 +29,15 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var hobbiesTextView: UITextView!
     @IBOutlet weak var longestRelationshipLabel: UILabel!
+    
+    @IBOutlet weak var heightTextField: UITextField!
+    @IBOutlet weak var bodyTypeLabel: UILabel!
+    @IBOutlet weak var kidLabel: UILabel!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var unLikeLabel: UILabel!
-       
+    @IBOutlet weak var userImageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var nameTextField: UITextField!
+    
     // MARK: - Variables
     var spacingOfScrollView: CGFloat = 15
     var model = ProfileModel.init(json: JSON(JSON.self))
@@ -45,15 +52,19 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
 //
 //        }
 //    }
+    @IBOutlet weak var ageSlider: AgeSlider!
+    @IBOutlet weak var ageLabel: UITextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    
     var videoPath: String?
-    var uploadProfile : Bool?
     var datePicker = UIDatePicker()
     var videoURL: String?
     let locationPicker = LocationPicker()
     var lat : Double?
     var long : Double?
     var images = [JSON]()
-    
+    var selectedMediaType = 0 // 0 - image profile, 1 - video, 2 - images
+    var feetInchDelegate = FeetInchDelegate()
     // MARK: - Private var/let
     private var tapGeture: UITapGestureRecognizer!
     private var swipeGeture: UISwipeGestureRecognizer!
@@ -65,7 +76,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
         title = "Look Listen & Feel"
         
 //        showVideo = false
-        showdatePicker()
+//        showdatePicker()
         // Handle side menu
         self.sideMenuController()?.sideMenu?.delegate = self
         // Set gradient of navigationBar
@@ -93,6 +104,9 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
         super.viewWillDisappear(animated)
         hideSideMenuView()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        getImages()
+    }
     
     // MARK: - objc Methods
     @objc func moreBarButtonAction() {
@@ -104,12 +118,12 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
         hideMenuOption()
     }
     
-    @objc func date(_ sender: UIDatePicker){
-        let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "MMM dd yyyy"
-//        self.ageLabel.text = dateformatter.string(from: sender.date)
-    }
-    
+//    @objc func date(_ sender: UIDatePicker){
+//        let dateformatter = DateFormatter()
+//        dateformatter.dateFormat = "MMM dd yyyy"
+////        self.ageLabel.text = dateformatter.string(from: sender.date)
+//    }
+//
     // MARK: - Private methods
     private func addTapGeture() {
         tapGeture = UITapGestureRecognizer(target: self, action: #selector(mainViewTapped))
@@ -153,19 +167,22 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
         self.picker.delegate = self
         self.picker.backgroundColor = UIColor.white
         initPinterestLayout()
+        
+        heightTextField.delegate = feetInchDelegate
     }
     
-    func showdatePicker(){
-        self.datePicker.datePickerMode = .date
-        datePicker.maximumDate = Date()
-        datePicker.backgroundColor = UIColor.white
-//        self.ageLabel.inputView = self.datePicker
-        datePicker.addTarget(self, action: #selector(date), for: .valueChanged)
-    }
+//    func showdatePicker(){
+//        self.datePicker.datePickerMode = .date
+//        datePicker.maximumDate = Date()
+//        datePicker.backgroundColor = UIColor.white
+////        self.ageLabel.inputView = self.datePicker
+//        datePicker.addTarget(self, action: #selector(date), for: .valueChanged)
+//    }
     
     func loadData(){
-//        self.userNameLabel.text = self.model.userName ?? ""
-//        self.ageLabel.text = self.dateConverter(string: "\(self.model.DateOfBirth ?? "")")
+        self.nameTextField.text = self.model.userName ?? ""
+        self.ageLabel.text = "\(self.model.DateOfBirth ?? 0)"
+        ageSlider.value = Float(self.model.DateOfBirth ?? 0)
         self.userImageView.sd_setImage(with: URL(string: self.model.userImage ?? ""), placeholderImage: #imageLiteral(resourceName: "profilePlaceholder"), options: .refreshCached, progress: nil) { (image, error, cache, url) in
             if image != nil{
                 self.userImageView.image = image
@@ -184,13 +201,13 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
 //        self.lookingForTextfield.text = self.model.lookingFor ?? ""
 //        self.longestRelationshipTextfield.text = self.model.longestRelationship ?? ""
 //        self.kidsTxtField.text = self.model.kids ?? ""
-//        self.descriptionTextView.text = ((self.model.Aboutme ?? "") != "") ? (self.model.Aboutme ?? "") : "Write Descriptions..."
+        self.descriptionTextView.text = ((self.model.Aboutme ?? "") != "") ? (self.model.Aboutme ?? "") : ""
 //        self.descriptionTextView.textColor = ((self.model.Aboutme ?? "") != "") ? UIColor.black : UIColor.gray
 //        self.jobLabel.text = self.model.bodyType ?? ""
         self.locationNameLabel.text = self.model.address ?? ""
     }
     func getImages(){
-        let param : Parameters = ["userID": standard.string(forKey: "userId") ?? ""]
+        let param : Parameters = ["user_id": standard.string(forKey: "userId") ?? ""]
         ApiInteraction.sharedInstance.funcToHitApi(url: apiURL + "getImages", param: param, header: [:], success: { (json) in
             print(json)
             if json["status"].intValue == 1{
@@ -205,7 +222,27 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
             self.view.stopProgresshub()
         }
     }
+    func saveImage(image:UIImage){
+        let param : Parameters = ["userID": standard.string(forKey: "userId") ?? ""]
+        ApiInteraction.sharedInstance.funcToHitMultipartApi(url: apiURL + "saveImage", param: param, header: [:], imageArray: [image], imageName: ["image.jpg"], success: { (json) in
+            print(json)
+            if json["status"].intValue == 1{
+                self.images = json["res"].arrayValue
+                self.collectionView.reloadData()
+            }else{
+                self.showalert(msg: json["message"].stringValue)
+            }
+            self.view.stopProgresshub()
+        }) { (error) in
+            print(error)
+            self.view.stopProgresshub()
+        }
+    }
     
+    @IBAction func onAgeChanged(_ sender: UISlider) {
+        print(sender.value)
+        ageLabel.text = "\(Int(sender.value))"
+    }
     //MARK:- Actions
     @IBAction func saveAction(_ sender: Any) {
 //        guard (self.jobLabel.text ?? "") != "" else{
@@ -219,7 +256,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
     @IBAction func onBack(_ sender: Any) {
     }
     @IBAction func recordButtonAction(_ sender: Any) {
-        self.uploadProfile = false
+        self.selectedMediaType = 1
         let alert = UIAlertController(title: "Choose Video From", message: nil, preferredStyle: .alert)
         let cameraAction = UIAlertAction(title: "Record Video", style: .default) { (alert) in
             self.openCamera()
@@ -242,7 +279,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
     }
     
     @IBAction func uploadProfilePicAction(_ sender: Any) {
-        self.uploadProfile = true
+        self.selectedMediaType = 0
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel,handler: { action -> Void in
         })
         let photoAction = UIAlertAction(title: "From Photo Library", style: .default, handler: { action -> Void in
@@ -270,7 +307,35 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
         }
     }
     
-   
+    func uploadImageAction() {
+        self.selectedMediaType = 2
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel,handler: { action -> Void in
+        })
+        let photoAction = UIAlertAction(title: "From Photo Library", style: .default, handler: { action -> Void in
+            self.checkForPhotosAccess()
+        })
+        let cameraRollAction = UIAlertAction(title: "Camera", style: .default, handler: { action -> Void in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                self.checkForCameraAccess()
+            }
+        })
+        cameraRollAction.setValue(UIColor.red, forKey: "titleTextColor")
+        imagePickerController.delegate = self
+        imagePickerController.title = "UploadProfilePicker"
+        if UIDevice.isPhone {
+        self.showAlert("Choose your profile picture",
+                       message: nil,
+                       style: UIAlertController.Style.actionSheet,
+                       actions: [cancelAction, cameraRollAction, photoAction])
+        }
+        else {
+            self.showAlert("Choose your profile picture",
+            message: nil,
+            style: UIAlertController.Style.alert,
+            actions: [cancelAction, cameraRollAction, photoAction])
+        }
+    }
+    
     
     
     //MARK: - filePrivate Functions
@@ -371,40 +436,33 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
     func saveApi(){
         let param: Parameters = [
             "userID": standard.string(forKey: "userId") ?? "",
-//                                 "UserName": userNameLabel.text ?? "",
-//                                 "OnlineStatus": "1",
+                                 "UserName": nameTextField.text ?? "",
+                                 "OnlineStatus": "1",
 //                                 "Address": self.locationNameLabel.text ?? "",
-//                                 "AboutMe": (self.descriptionTextView.textColor == UIColor.black) ? ((self.descriptionTextView.text) ?? "") : "",
+                                 "AboutMe": self.descriptionTextView.text,
 //                                 "BodyType" : jobLabel.text ?? "",
-//                                 "DOB": ageLabel.text ?? "",
-//                                 "UserAge": ageLabel.text ?? "",
+                                 "DOB": ageLabel.text ?? "",
+                                 "UserAge": ageLabel.text ?? "",
 //                                 "LookingFor" : lookingForTextfield.text ?? "",
 //                                 "LongestRelationship": longestRelationshipTextfield.text ?? "",
 //                                 "Kids": kidsTxtField.text ?? "",
 //                                 "Hobbies": (self.TxtViewhobbies.text ?? ""),
-//                                 "LikePercentage": "",
-//                                 "FavouritePercentage": "",
-//                                 "UnlikePercentage": "",
 //                                 "VedioUrl" : self.videoURL ?? "",
-//                                 "FacebookUrl" : self.facebooktextField.text ?? "",
-//                                 "InstagramUrl" : self.instagramtextField.text ?? "",
-//                                 "YoutubeUrl" : self.youtubetextField.text ?? "",
-//                                 "GoogleplusUrl" : self.googlePlustextField.text ?? "",
-//                                 "latitude" : "\(lat ?? 0.0)",
-//                                 "longitude" : "\(long ?? 0.0)"
+                                 "latitude" : "\(lat ?? 0.0)",
+                                 "longitude" : "\(long ?? 0.0)"
         ]
         print(param)
         self.view.startProgressHub()
-//        ApiInteraction.sharedInstance.funcToHitTwoMultipartApi(url: apiURL + "updateuserProfile", param: param, header: [:], imageArray: [self.userImageView.image ?? UIImage()], imageName: ["profilePic"], videoImage: self.videoImage.image ?? #imageLiteral(resourceName: "crop"), videoImageName: "videoImage", success: { (json) in
-//            print(json)
-//            self.showalert(msg: json["message"].stringValue)
-//            standard.set(json["data"]["profilePic"].stringValue, forKey: "userImage")
-//            self.view.stopProgresshub()
-//        }) { (error) in
-//            print(error)
-//            self.view.stopProgresshub()
-//            self.showalert(msg: error)
-//        }
+        ApiInteraction.sharedInstance.funcToHitMultipartApi(url: apiURL + "updateuserProfile", param: param, header: [:], imageArray: [self.userImageView.image ?? UIImage()], imageName: ["profilePic"], success: { (json) in
+            print(json)
+            self.showalert(msg: json["message"].stringValue)
+            standard.set(json["data"]["profilePic"].stringValue, forKey: "userImage")
+            self.view.stopProgresshub()
+        }) { (error) in
+            print(error)
+            self.view.stopProgresshub()
+            self.showalert(msg: error)
+        }
     }
     func uploadImage(image:UIImage){
         self.view.startProgressHub()
@@ -439,19 +497,13 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
     
     //MARK:- textFieldDelegates
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        /*if textField == jobLabel{
-            isType = "job"
-            textField.text = self.bodyArray[0]
-        }else if textField == lookingForTextfield{
+        /* if textField == lookingForTextfield{
             isType = "looking"
             textField.text = self.lookingArray[0]
         }
         else if textField == kidsTxtField{
             isType = "kid"
             textField.text = self.kidArray[0]
-        }else if textField == longestRelationshipTextfield{
-            isType = "relationship"
-            textField.text = self.relationArray[0]
         }else */if textField == locationNameLabel{
             textField.inputView = nil
             guard standard.bool(forKey: "paymentStatus") else{
@@ -463,14 +515,42 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
         self.picker.reloadAllComponents()
         self.picker.reloadInputViews()
     }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if hobbiesTextView == textView {
+            
+        }
+    }
+    @IBAction func onLongestRelationshipClicked(_ sender: Any) {
+        isType = "relationship"
+        longestRelationshipLabel.text = self.relationArray[0]
+        self.picker.reloadAllComponents()
+        self.picker.reloadInputViews()
+    }
     
-    
+    @IBAction func onKidSelected(_ sender: Any) {
+        isType = "Kid"
+        longestRelationshipLabel.text = self.relationArray[0]
+        self.picker.reloadAllComponents()
+        self.picker.reloadInputViews()
+    }
+    @IBAction func onBodySelected(_ sender: Any) {
+        isType = "Kid"
+        longestRelationshipLabel.text = self.relationArray[0]
+        self.picker.reloadAllComponents()
+        self.picker.reloadInputViews()
+    }
     //MARK:- ImagePickerDelegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let filePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             // imageViewPic.contentMode = .scaleToFill
-            self.userImageView.image = filePath
+            if selectedMediaType == 0 {
+                self.userImageView.image = filePath
+            }
+            else {
+                self.uploadImage(image: filePath)
+            }
         }
+        picker.dismiss(animated: true, completion: nil)
     }
     
     //MARK: - textViewDelegates
@@ -485,12 +565,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
 //            self.descriptionHeight.constant = 65
 //        }
     }
-    func textViewDidBeginEditing(_ textView: UITextView) {
-//        if descriptionTextView.text == "Write Descriptions..."{
-//            descriptionTextView.text = ""
-//            descriptionTextView.textColor = UIColor.black
-//        }
-    }
+    
     
     func textViewDidEndEditing(_ textView: UITextView) {
 //        if textView.text == ""{
@@ -522,7 +597,7 @@ extension EditProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-       if isType == "job"{
+       if isType == "body"{
             return bodyArray.count
         }else if isType == "looking"{
             return lookingArray.count
@@ -536,7 +611,7 @@ extension EditProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if isType == "job"{
+        if isType == "body"{
             return bodyArray[row]
         }else if isType == "looking"{
             return lookingArray[row]
@@ -550,15 +625,15 @@ extension EditProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        if isType == "job"{
-//            jobLabel.text = bodyArray[row]
-//        }else if isType == "looking"{
+        if isType == "body"{
+            bodyTypeLabel.text = bodyArray[row]
+        }else if isType == "looking"{
 //            lookingForTextfield.text = lookingArray[row]
-//        }else if isType == "kid"{
-//            kidsTxtField.text = kidArray[row]
-//        }else if isType == "relationship"{
-//            longestRelationshipTextfield.text = relationArray[row]
-//        }
+        }else if isType == "kid"{
+            kidLabel.text = kidArray[row]
+        }else if isType == "relationship"{
+            longestRelationshipLabel.text = relationArray[row]
+        }
     }
 }
 
@@ -604,14 +679,13 @@ extension EditProfileViewController: PinterestLayoutDelegate,UICollectionViewDat
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath)
         let imageView = cell.viewWithTag(100) as! UIImageView
-        imageView.image = UIImage(named: "anonymous.jpg")
-        let imageUrl = images[indexPath.row].stringValue
+        let imageUrl = "\(imageURL)\(images[indexPath.row]["image"].stringValue)"
+        print(imageUrl)
         imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "anonymous.jpg"))
         return cell
     }
     func collectionView(collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
-        let image = UIImage(named: "anonymous.jpg")//images[indexPath.item]
-        var height:CGFloat = image!.height(forWidth: withWidth)
+        var height:CGFloat = 0
         switch indexPath.row % 5 {
         case 0:
             height = 100
@@ -636,9 +710,27 @@ extension EditProfileViewController: PinterestLayoutDelegate,UICollectionViewDat
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == images.count {
-            let introSilder = storyboard!.instantiateViewController(withIdentifier: "upload_video")
-            introSilder.modalPresentationStyle = .fullScreen
-            present(introSilder, animated: false, completion: nil)
+            self.selectedMediaType = 2
+            self.uploadImageAction()
+//            let introSilder = storyboard!.instantiateViewController(withIdentifier: "upload_video")
+//            introSilder.modalPresentationStyle = .fullScreen
+//            present(introSilder, animated: false, completion: nil)
         }
+        else {
+            
+        }
+    }
+    func deleteImage(){
+        
+    }
+}
+extension EditProfileViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        var newHeight:Float = 400
+        newHeight = newHeight - Float(scrollView.contentOffset.y)
+        if( newHeight < 150) {
+            newHeight = 150
+        }
+        userImageHeightConstraint.constant = CGFloat(newHeight)
     }
 }

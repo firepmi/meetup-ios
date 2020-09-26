@@ -100,6 +100,7 @@
 		FC04398024C1580C00B036C8 /* icon_email_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = FC04397D24C1580A00B036C8 /* icon_email_grey.png */; };
 		FC04398124C1580C00B036C8 /* icon_gender.png in Resources */ = {isa = PBXBuildFile; fileRef = FC04397E24C1580B00B036C8 /* icon_gender.png */; };
 		FC04398224C1580C00B036C8 /* icon_age.png in Resources */ = {isa = PBXBuildFile; fileRef = FC04397F24C1580B00B036C8 /* icon_age.png */; };
+		FC0D1F7A251E3530007FD0BB /* AgeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0D1F79251E352E007FD0BB /* AgeSlider.swift */; };
 		FC3574C524FB9F9E0067D9A3 /* IntroSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3574C424FB9F9E0067D9A3 /* IntroSliderViewController.swift */; };
 		FC3935C424C5F8CC004DB4B6 /* LogoVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = FCD11E5124C3455600591D5D /* LogoVideo.mp4 */; };
 		FC41CE8C24D3BA3000BF349D /* DeleteAccountDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC41CE8B24D3BA3000BF349D /* DeleteAccountDialogViewController.swift */; };
@@ -243,6 +244,7 @@
 		FC04397D24C1580A00B036C8 /* icon_email_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_email_grey.png; sourceTree = "<group>"; };
 		FC04397E24C1580B00B036C8 /* icon_gender.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_gender.png; sourceTree = "<group>"; };
 		FC04397F24C1580B00B036C8 /* icon_age.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_age.png; sourceTree = "<group>"; };
+		FC0D1F79251E352E007FD0BB /* AgeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeSlider.swift; sourceTree = "<group>"; };
 		FC3574C424FB9F9E0067D9A3 /* IntroSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroSliderViewController.swift; sourceTree = "<group>"; };
 		FC41CE8B24D3BA3000BF349D /* DeleteAccountDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountDialogViewController.swift; sourceTree = "<group>"; };
 		FC506F8B244F8C5600CE4E34 /* SubscriptionProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionProducts.swift; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 				8B00F9F52296B43F00E9C1FF /* HomeViewCell.xib */,
 				8B00F9F62296B43F00E9C1FF /* RoundedButton.swift */,
 				FC506F9224509AE100CE4E34 /* VideoView.swift */,
+				FC0D1F79251E352E007FD0BB /* AgeSlider.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -828,6 +831,7 @@
 				8B00FA2C2296B43F00E9C1FF /* ApiInteraction.swift in Sources */,
 				8B00FA012296B43F00E9C1FF /* CommentsModel.swift in Sources */,
 				8B00FA0E2296B43F00E9C1FF /* UIView.swift in Sources */,
+				FC0D1F7A251E3530007FD0BB /* AgeSlider.swift in Sources */,
 				8B00FA052296B43F00E9C1FF /* Messagenew.swift in Sources */,
 				8B00FA2A2296B43F00E9C1FF /* Appstate.swift in Sources */,
 				8B00FA222296B43F00E9C1FF /* LoginViewController.swift in Sources */,
