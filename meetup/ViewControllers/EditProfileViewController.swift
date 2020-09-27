@@ -45,13 +45,9 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
     var isType = ""
     var bodyArray = ["Skinny","Athletic","Average","Muscular","Slim","Thick"]
     var lookingArray = ["FriendShip","RelationShip"]
-    var kidArray = ["No", "Yes, 1 Kid","Yes, 2 Kid","Yes, 3 Kid","Yes, 4 Kid"]
+    var kidArray = ["Single", "In a relationship","Engaged","Married",]
     var relationArray = ["1 year","2 year","3 year","4 year","5 year","More than 5 year"]
-//    var showVideo = false{
-//        didSet{
-//
-//        }
-//    }
+
     @IBOutlet weak var ageSlider: AgeSlider!
     @IBOutlet weak var ageLabel: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -199,11 +195,11 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
 //            }
 //        }
 //        self.lookingForTextfield.text = self.model.lookingFor ?? ""
-//        self.longestRelationshipTextfield.text = self.model.longestRelationship ?? ""
-//        self.kidsTxtField.text = self.model.kids ?? ""
+        self.longestRelationshipLabel.text = self.model.longestRelationship ?? ""
+        self.kidLabel.text = self.model.kids ?? ""
         self.descriptionTextView.text = ((self.model.Aboutme ?? "") != "") ? (self.model.Aboutme ?? "") : ""
 //        self.descriptionTextView.textColor = ((self.model.Aboutme ?? "") != "") ? UIColor.black : UIColor.gray
-//        self.jobLabel.text = self.model.bodyType ?? ""
+        self.bodyTypeLabel.text = self.model.bodyType ?? ""
         self.locationNameLabel.text = self.model.address ?? ""
     }
     func getImages(){
@@ -438,15 +434,15 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
             "userID": standard.string(forKey: "userId") ?? "",
                                  "UserName": nameTextField.text ?? "",
                                  "OnlineStatus": "1",
-//                                 "Address": self.locationNameLabel.text ?? "",
-                                 "AboutMe": self.descriptionTextView.text,
-//                                 "BodyType" : jobLabel.text ?? "",
+                                 "Address": self.locationNameLabel.text ?? "",
+                                 "AboutMe": self.descriptionTextView.text ?? "",
+                                 "BodyType" : bodyTypeLabel.text ?? "",
                                  "DOB": ageLabel.text ?? "",
                                  "UserAge": ageLabel.text ?? "",
 //                                 "LookingFor" : lookingForTextfield.text ?? "",
-//                                 "LongestRelationship": longestRelationshipTextfield.text ?? "",
-//                                 "Kids": kidsTxtField.text ?? "",
-//                                 "Hobbies": (self.TxtViewhobbies.text ?? ""),
+                                 "LongestRelationship": longestRelationshipLabel.text ?? "",
+                                 "Kids": kidLabel.text ?? "",
+                                 "Hobbies": hobbiesTextView ?? "",
 //                                 "VedioUrl" : self.videoURL ?? "",
                                  "latitude" : "\(lat ?? 0.0)",
                                  "longitude" : "\(long ?? 0.0)"

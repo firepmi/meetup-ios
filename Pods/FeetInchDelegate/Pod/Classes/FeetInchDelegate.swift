@@ -4,11 +4,11 @@ import UIKit
 public class FeetInchDelegate : NSObject ,UITextFieldDelegate {
     
     public let expression: NSRegularExpression
-    public let startingText: String = " ft  in."
+    public let startingText: String = "' \""
     private var hasFeets: Bool = false
     
     override public init(){
-        self.expression = try! NSRegularExpression(pattern: "^([0-9]?)' ((?:[0-9]|10|11)?) \"\\.$", options: NSRegularExpression.Options())
+        self.expression = try! NSRegularExpression(pattern: "^([0-9]?)' ((?:[0-9]|10|11)?)\"", options: NSRegularExpression.Options())
         super.init()
     }
    
@@ -82,9 +82,13 @@ public class FeetInchDelegate : NSObject ,UITextFieldDelegate {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         let text = textField.text! as NSString
+        print(string)
         let newText = text.replacingCharacters(in: range, with: string) as String
+        print(newText)
         let matches = self.expression.matches(in: newText, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, newText.count))
         let matchOk = matches.count == 1
+        print(matchOk)
+        print(newText.count, textField.text!.count)
         //if the newText stops to match the regex and is of lower length - user hitted backspace
         //go to proper position - user goes back to edit feet or inches
         if matchOk == false && newText.count < textField.text!.count  {
