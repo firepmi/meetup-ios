@@ -15,7 +15,6 @@ import CoreLocation
 import MobileCoreServices
 import SDWebImage
 import PinterestLayout
-import FeetInchDelegate
 
 class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate , UINavigationControllerDelegate, UITextViewDelegate {
 
@@ -42,6 +41,7 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
     var spacingOfScrollView: CGFloat = 15
     var model = ProfileModel.init(json: JSON(JSON.self))
     var picker = UIPickerView()
+    var toolBar = UIToolbar()
     var isType = ""
     var bodyArray = ["Skinny","Athletic","Average","Muscular","Slim","Thick"]
     var lookingArray = ["FriendShip","RelationShip"]
@@ -194,11 +194,10 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
 //                self.videoImage.image = #imageLiteral(resourceName: "crop")
 //            }
 //        }
-//        self.lookingForTextfield.text = self.model.lookingFor ?? ""
+        self.heightTextField.text = self.model.height ?? ""
         self.longestRelationshipLabel.text = self.model.longestRelationship ?? ""
         self.kidLabel.text = self.model.kids ?? ""
         self.descriptionTextView.text = ((self.model.Aboutme ?? "") != "") ? (self.model.Aboutme ?? "") : ""
-//        self.descriptionTextView.textColor = ((self.model.Aboutme ?? "") != "") ? UIColor.black : UIColor.gray
         self.bodyTypeLabel.text = self.model.bodyType ?? ""
         self.locationNameLabel.text = self.model.address ?? ""
     }
@@ -432,20 +431,22 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
     func saveApi(){
         let param: Parameters = [
             "userID": standard.string(forKey: "userId") ?? "",
-                                 "UserName": nameTextField.text ?? "",
-                                 "OnlineStatus": "1",
-                                 "Address": self.locationNameLabel.text ?? "",
-                                 "AboutMe": self.descriptionTextView.text ?? "",
-                                 "BodyType" : bodyTypeLabel.text ?? "",
-                                 "DOB": ageLabel.text ?? "",
-                                 "UserAge": ageLabel.text ?? "",
-//                                 "LookingFor" : lookingForTextfield.text ?? "",
-                                 "LongestRelationship": longestRelationshipLabel.text ?? "",
-                                 "Kids": kidLabel.text ?? "",
-                                 "Hobbies": hobbiesTextView ?? "",
+            "UserName": nameTextField.text ?? "",
+            "OnlineStatus": "1",
+            "Address": self.locationNameLabel.text ?? "",
+            "AboutMe": self.descriptionTextView.text ?? "",
+            "BodyType" : bodyTypeLabel.text ?? "",
+            "DOB": ageLabel.text ?? "",
+            "UserAge": ageLabel.text ?? "",
+            //                                 "LookingFor" : lookingForTextfield.text ?? "",
+            "LongestRelationship": longestRelationshipLabel.text ?? "",
+            "Kids": kidLabel.text ?? "",
+            "Hobbies": hobbiesTextView.text ?? "",
+            "height": heightTextField.text ?? "",
+            
 //                                 "VedioUrl" : self.videoURL ?? "",
-                                 "latitude" : "\(lat ?? 0.0)",
-                                 "longitude" : "\(long ?? 0.0)"
+            "latitude" : "\(lat ?? 0.0)",
+            "longitude" : "\(long ?? 0.0)"
         ]
         print(param)
         self.view.startProgressHub()
@@ -468,11 +469,27 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
             print(json)
              self.view.stopProgresshub()
             if json["status"].intValue == 1{
-                //get images
+                self.getImages()
             }else{
                 self.showalert(msg: json["message"].stringValue)
             }
         }) { (error) in
+            print(error)
+            self.view.stopProgresshub()
+        }
+    }
+    func deleteImage(id:String){
+        self.view.startProgressHub()
+        let param: Parameters = ["image_id": id]
+        ApiInteraction.sharedInstance.funcToHitApi(url: apiURL + "deleteImage", param: param, header: [:]) { json in
+            print(json)
+             self.view.stopProgresshub()
+            if json["status"].intValue == 1{
+                self.getImages()
+            }else{
+                self.showalert(msg: json["message"].stringValue)
+            }
+        } failure: { error in
             print(error)
             self.view.stopProgresshub()
         }
@@ -521,19 +538,40 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
         longestRelationshipLabel.text = self.relationArray[0]
         self.picker.reloadAllComponents()
         self.picker.reloadInputViews()
+        showPicker()
     }
-    
+    func showPicker(){
+//        picker = UIPickerView.init()
+//        picker.delegate = self
+//        picker.backgroundColor = UIColor.white
+//        picker.setValue(UIColor.black, forKey: "textColor")
+        picker.autoresizingMask = .flexibleWidth
+        picker.contentMode = .center
+        picker.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
+        self.view.addSubview(picker)
+
+        toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
+        toolBar.barStyle = .blackTranslucent
+        toolBar.items = [UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(onDoneButtonTapped))]
+        self.view.addSubview(toolBar)
+    }
+    @objc func onDoneButtonTapped() {
+        toolBar.removeFromSuperview()
+        picker.removeFromSuperview()
+    }
     @IBAction func onKidSelected(_ sender: Any) {
-        isType = "Kid"
+        isType = "kid"
         longestRelationshipLabel.text = self.relationArray[0]
         self.picker.reloadAllComponents()
         self.picker.reloadInputViews()
+        showPicker()
     }
     @IBAction func onBodySelected(_ sender: Any) {
-        isType = "Kid"
+        isType = "body"
         longestRelationshipLabel.text = self.relationArray[0]
         self.picker.reloadAllComponents()
         self.picker.reloadInputViews()
+        showPicker()
     }
     //MARK:- ImagePickerDelegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -598,7 +636,7 @@ extension EditProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource
         }else if isType == "looking"{
             return lookingArray.count
         }else if isType == "kid"{
-            return 5
+            return kidArray.count
         }else if isType == "relationship"{
             return relationArray.count
        }else{
@@ -612,7 +650,12 @@ extension EditProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource
         }else if isType == "looking"{
             return lookingArray[row]
         }else if isType == "kid"{
-            return kidArray[row]
+            if kidArray.count > row {
+                return kidArray[row]
+            }
+            else {
+                return kidArray[kidArray.count - 1]
+            }
         }else if isType == "relationship"{
             return relationArray[row]
         }else{
@@ -626,7 +669,12 @@ extension EditProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource
         }else if isType == "looking"{
 //            lookingForTextfield.text = lookingArray[row]
         }else if isType == "kid"{
-            kidLabel.text = kidArray[row]
+            if kidArray.count > row {
+                kidLabel.text = kidArray[row]
+            }
+            else {
+                kidLabel.text = kidArray[kidArray.count - 1]
+            }
         }else if isType == "relationship"{
             longestRelationshipLabel.text = relationArray[row]
         }
@@ -713,11 +761,16 @@ extension EditProfileViewController: PinterestLayoutDelegate,UICollectionViewDat
 //            present(introSilder, animated: false, completion: nil)
         }
         else {
+            let alert = UIAlertController(title: "Do you want remove this image?", message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Delete it", style: .default) { [self] (alert) in
+                self.deleteImage(id: self.images[indexPath.row]["id"].stringValue)
+            }
+            let cancelAction = UIAlertAction(title: "No, I will keep it.", style: .default, handler: nil)
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
             
         }
-    }
-    func deleteImage(){
-        
     }
 }
 extension EditProfileViewController: UIScrollViewDelegate {

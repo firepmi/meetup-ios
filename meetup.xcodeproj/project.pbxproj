@@ -112,6 +112,7 @@
 		FC506FA32450D5A500CE4E34 /* icon_finger_down.png in Resources */ = {isa = PBXBuildFile; fileRef = FC506F9F2450D5A300CE4E34 /* icon_finger_down.png */; };
 		FC506FA42450D5A500CE4E34 /* icon_finger_up.png in Resources */ = {isa = PBXBuildFile; fileRef = FC506FA02450D5A400CE4E34 /* icon_finger_up.png */; };
 		FC506FA52450D5A500CE4E34 /* icon_finger_right.png in Resources */ = {isa = PBXBuildFile; fileRef = FC506FA12450D5A500CE4E34 /* icon_finger_right.png */; };
+		FC598F562520E82F004F4267 /* FeetInchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC598F552520E82B004F4267 /* FeetInchDelegate.swift */; };
 		FC5EF83424CB5E9E00E1C28B /* icon_height.png in Resources */ = {isa = PBXBuildFile; fileRef = FC5EF82E24CB5E9C00E1C28B /* icon_height.png */; };
 		FC5EF83524CB5E9E00E1C28B /* icon_status.png in Resources */ = {isa = PBXBuildFile; fileRef = FC5EF82F24CB5E9C00E1C28B /* icon_status.png */; };
 		FC5EF83624CB5E9E00E1C28B /* btn_back_white.png in Resources */ = {isa = PBXBuildFile; fileRef = FC5EF83024CB5E9C00E1C28B /* btn_back_white.png */; };
@@ -256,6 +257,7 @@
 		FC506FA02450D5A400CE4E34 /* icon_finger_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_finger_up.png; sourceTree = "<group>"; };
 		FC506FA12450D5A500CE4E34 /* icon_finger_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_finger_right.png; sourceTree = "<group>"; };
 		FC506FA62451196300CE4E34 /* meetup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = meetup.entitlements; sourceTree = "<group>"; };
+		FC598F552520E82B004F4267 /* FeetInchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeetInchDelegate.swift; sourceTree = "<group>"; };
 		FC5EF82E24CB5E9C00E1C28B /* icon_height.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_height.png; sourceTree = "<group>"; };
 		FC5EF82F24CB5E9C00E1C28B /* icon_status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_status.png; sourceTree = "<group>"; };
 		FC5EF83024CB5E9C00E1C28B /* btn_back_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_back_white.png; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 			children = (
 				8B00F9E42296B43F00E9C1FF /* Constant.swift */,
 				8B00F9E52296B43F00E9C1FF /* Appstate.swift */,
+				FC598F552520E82B004F4267 /* FeetInchDelegate.swift */,
 				8B00F9E62296B43F00E9C1FF /* Helper Classes */,
 				FC506F8A244F8C3E00CE4E34 /* Subscription */,
 			);
@@ -849,6 +852,7 @@
 				8B00FA392296B43F00E9C1FF /* RoundedButton.swift in Sources */,
 				FC506F90244FF6E700CE4E34 /* IntroVideoViewController.swift in Sources */,
 				8B00FA0B2296B43F00E9C1FF /* PushpaCollectionViewLayout.swift in Sources */,
+				FC598F562520E82F004F4267 /* FeetInchDelegate.swift in Sources */,
 				8B00FA092296B43F00E9C1FF /* ENSideMenu.swift in Sources */,
 				8B00FA212296B43F00E9C1FF /* ChatVC.swift in Sources */,
 				8B00FA242296B43F00E9C1FF /* CommentViewController.swift in Sources */,

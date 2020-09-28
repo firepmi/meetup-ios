@@ -20,7 +20,7 @@ public class ProfileModel: NSCoding {
   private let kProfileModelLikePercentageKey: String = "Like Percentage"
   private let kProfileModelFacebookUrlKey: String = "facebook url"
   private let kProfileModelFavouritePercentageKey: String = "Favourite"
-  private let kProfileModelLookingForKey: String = "Looking For"
+  private let kProfileModelHeight: String = "height"
   private let kProfileModelVedioUrlKey: String = "Vedio url"
   private let kProfileModelLongestRelationshipKey: String = "Longest Relationship"
   private let kProfileModelKidsKey: String = "kids"
@@ -43,7 +43,7 @@ public class ProfileModel: NSCoding {
   public var likePercentage: String?
   public var facebookUrl: String?
   public var favouritePercentage: String?
-  public var lookingFor: String?
+  public var height: String?
   public var vedioUrl: String?
   public var longestRelationship: String?
   public var kids: String?
@@ -80,7 +80,7 @@ public class ProfileModel: NSCoding {
     likePercentage = json[kProfileModelLikePercentageKey].string
     facebookUrl = json[kProfileModelFacebookUrlKey].string
     favouritePercentage = json[kProfileModelFavouritePercentageKey].string
-    lookingFor = json[kProfileModelLookingForKey].string
+    height = json[kProfileModelHeight].string
     vedioUrl = json[kProfileModelVedioUrlKey].string
     longestRelationship = json[kProfileModelLongestRelationshipKey].string
     kids = json[kProfileModelKidsKey].string
@@ -109,7 +109,7 @@ public class ProfileModel: NSCoding {
     if let value = likePercentage { dictionary[kProfileModelLikePercentageKey] = value }
     if let value = facebookUrl { dictionary[kProfileModelFacebookUrlKey] = value }
     if let value = favouritePercentage { dictionary[kProfileModelFavouritePercentageKey] = value }
-    if let value = lookingFor { dictionary[kProfileModelLookingForKey] = value }
+    if let value = height { dictionary[kProfileModelHeight] = value }
     if let value = vedioUrl { dictionary[kProfileModelVedioUrlKey] = value }
     if let value = longestRelationship { dictionary[kProfileModelLongestRelationshipKey] = value }
     if let value = kids { dictionary[kProfileModelKidsKey] = value }
@@ -135,7 +135,7 @@ public class ProfileModel: NSCoding {
     self.likePercentage = aDecoder.decodeObject(forKey: kProfileModelLikePercentageKey) as? String
     self.facebookUrl = aDecoder.decodeObject(forKey: kProfileModelFacebookUrlKey) as? String
     self.favouritePercentage = aDecoder.decodeObject(forKey: kProfileModelFavouritePercentageKey) as? String
-    self.lookingFor = aDecoder.decodeObject(forKey: kProfileModelLookingForKey) as? String
+    self.height = aDecoder.decodeObject(forKey: kProfileModelHeight) as? String
     self.vedioUrl = aDecoder.decodeObject(forKey: kProfileModelVedioUrlKey) as? String
     self.longestRelationship = aDecoder.decodeObject(forKey: kProfileModelLongestRelationshipKey) as? String
     self.kids = aDecoder.decodeObject(forKey: kProfileModelKidsKey) as? String
@@ -159,7 +159,7 @@ public class ProfileModel: NSCoding {
     aCoder.encode(likePercentage, forKey: kProfileModelLikePercentageKey)
     aCoder.encode(facebookUrl, forKey: kProfileModelFacebookUrlKey)
     aCoder.encode(favouritePercentage, forKey: kProfileModelFavouritePercentageKey)
-    aCoder.encode(lookingFor, forKey: kProfileModelLookingForKey)
+    aCoder.encode(height, forKey: kProfileModelHeight)
     aCoder.encode(vedioUrl, forKey: kProfileModelVedioUrlKey)
     aCoder.encode(longestRelationship, forKey: kProfileModelLongestRelationshipKey)
     aCoder.encode(kids, forKey: kProfileModelKidsKey)

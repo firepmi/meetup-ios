@@ -48,8 +48,13 @@ public class FeetInchDelegate : NSObject ,UITextFieldDelegate {
         let (feets, _) = self.extractValuesFromString(string: textField.text!)
         self.hasFeets = feets != nil
         let offset = self.hasFeets ? 1 : 0
+        print(offset)
         let position:UITextPosition = textField.position(from: textField.beginningOfDocument, offset: offset)!
-        textField.selectedTextRange = textField.textRange(from: position, to: position)
+        print(position)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            textField.selectedTextRange = textField.textRange(from: position, to: position)
+        }        
         
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldDidChange(notification:)), name: UITextField.textDidChangeNotification, object: textField)
     }

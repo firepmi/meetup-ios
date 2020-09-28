@@ -1,6 +1,0 @@
-framework module FeetInchDelegate {
-  umbrella header "FeetInchDelegate-umbrella.h"
-
-  export *
-  module * { export * }
-}

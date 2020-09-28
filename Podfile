@@ -51,7 +51,6 @@ pod 'Firebase/Auth'
 pod 'PinterestLayout'
 pod 'FSPagerView'
 pod 'KMPlaceholderTextView'
-pod 'FeetInchDelegate'
 
 end
 

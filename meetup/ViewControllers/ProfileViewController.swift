@@ -33,7 +33,11 @@ class ProfileViewController: UIViewController {
 //    @IBOutlet weak var percentHeartLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var unlikeButton: UIButton!
-//    @IBOutlet weak var heartButton: UIButton!
+    @IBOutlet weak var heightLabel: UILabel!
+    @IBOutlet weak var kidsLabel: UILabel!
+    @IBOutlet weak var bodyTypeLabel: UILabel!
+    
+    //    @IBOutlet weak var heartButton: UIButton!
 //    @IBOutlet weak var recordButton: UIButton!
 //    @IBOutlet weak var instagramNameLabel: UILabel!
 //    @IBOutlet weak var facebookNameLabel: UILabel!
@@ -180,6 +184,13 @@ class ProfileViewController: UIViewController {
 //        self.jobLabel.text = self.model.bodyType ?? ""
         self.locationNameLabel.text = self.model.address ?? ""
         self.onlineStatusView.isHidden = ((self.model.onlineStatus ?? "") == "0")
+        
+        self.heightLabel.text = self.model.height ?? ""
+        self.longestRelationshipLabel.text = self.model.longestRelationship ?? ""
+        self.kidsLabel.text = self.model.kids ?? ""
+//        self.descriptionTextView.text = ((self.model.Aboutme ?? "") != "") ? (self.model.Aboutme ?? "") : ""
+        self.bodyTypeLabel.text = self.model.bodyType ?? ""
+        self.locationNameLabel.text = self.model.address ?? ""
     }
     
     

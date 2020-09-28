@@ -20,7 +20,6 @@ PODS:
     - FBSDKLoginKit/Login (= 7.1.1)
   - FBSDKLoginKit/Login (7.1.1):
     - FBSDKCoreKit (~> 7.1.1)
-  - FeetInchDelegate (0.1.1)
   - Firebase/Auth (6.32.2):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.9.1)
@@ -137,7 +136,6 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - FBSDKLoginKit
-  - FeetInchDelegate
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -165,7 +163,6 @@ SPEC REPOS:
     - Fabric
     - FBSDKCoreKit
     - FBSDKLoginKit
-    - FeetInchDelegate
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -204,7 +201,6 @@ SPEC CHECKSUMS:
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FBSDKCoreKit: b46507dc8b8cefed31d644e74d7cc30e2a715ef8
   FBSDKLoginKit: 1a61d79e2b25e2fc0d03dccab1e34b38bbdf2546
-  FeetInchDelegate: bb481626ea039e175f4aa41e404d25ea888095a1
   Firebase: 47176280bfba198e531f909cfb1612dad216cb96
   FirebaseAnalytics: 3c2fee6a922023ccfda7af87e4e641bad1fc11ba
   FirebaseAuth: f7b269b33c1e842a35400ddc9bbc8b03cdc47ba3
@@ -234,6 +230,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   VerticalCardSwiper: 515b67e281731293cdf69d96904d67091389a1b4
 
-PODFILE CHECKSUM: dcd39bcf26b45384f27a2d02d0b90026a8bfc577
+PODFILE CHECKSUM: b1b65fa0d08ff41683499d87a801fab9f2268748
 
 COCOAPODS: 1.9.3
