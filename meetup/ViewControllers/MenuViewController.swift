@@ -15,7 +15,7 @@ import SwiftyJSON
 class MenuViewController: UITableViewController {
     
     //MARK: - Variables
-    let menu: [String] = ["Home","Inbox","Comments", "Settings", "Edit profile", "Upgrade", "Terms & Conditions", "Privacy Statement", "Contact Us", "Logout", "Delete Account"]
+    let menu: [String] = ["Home","Inbox","Comments", "Settings", "Edit profile", "Upload Video", "Upgrade", "Terms & Conditions", "Privacy Statement", "Contact Us", "Logout", "Delete Account"]
     var selectedMenuItem : Int?
     var countClickCell: Int = 0
     
@@ -196,6 +196,13 @@ class MenuViewController: UITableViewController {
             }
             break
         case 5:
+            DispatchQueue.main.async {
+                let destVC = mainStoryboard.instantiateViewController(withIdentifier: "upload_video")
+                self.sideMenuController()?.setContentViewController(destVC)
+                self.navigationController?.pushViewController(destVC, animated: true)
+            }
+            break
+        case 6:
             guard !standard.bool(forKey: "paymentStatus") else{
                 selectedMenuItem = nil
                 self.showalert(msg: "Already Upgraded")
@@ -208,29 +215,29 @@ class MenuViewController: UITableViewController {
                 self.navigationController?.pushViewController(destVC, animated: true)
             }
             break
-        case 6:
+        case 7:
            // destVC = mainStoryboard.instantiateViewController(withIdentifier: "WebNCID") as! WebViewController
             let destVC = mainStoryboard.instantiateViewController(withIdentifier: "WebVC") as! WebViewController
             destVC.getDataURL = "\(baseURL)Home/termsofservices"
             sideMenuController()?.setContentViewController(destVC)
             self.navigationController?.pushViewController(destVC, animated: true)
             break
-        case 7:
+        case 8:
             let destVC = mainStoryboard.instantiateViewController(withIdentifier: "WebVC") as! WebViewController
             destVC.getDataURL = "\(baseURL)Home/privacypolicy" //"https://www.hackingwithswift.com/articles/126/whats-new-in-swift-5-0"
             sideMenuController()?.setContentViewController(destVC)
             self.navigationController?.pushViewController(destVC, animated: true)
             break
-        case 8:
+        case 9:
             let desVC = mainStoryboard.instantiateViewController(withIdentifier: "ContactUsViewController") as! ContactUsViewController
             sideMenuController()?.setContentViewController(desVC)
             self.navigationController?.pushViewController(desVC, animated: true)
             break
-        case 9:
+        case 10:
             self.logOutApi()
 //            LoginManager().logOut()
             break
-        case 10:
+        case 11:
             self.deleteAccount()
             break
         default:

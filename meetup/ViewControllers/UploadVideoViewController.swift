@@ -20,9 +20,20 @@ class UploadVideoViewController: UIViewController
     @IBOutlet weak var descriptionTextView: RoundedTextView!
     var videoPath: String?
     var url:URL?
+    private var tapGeture: UITapGestureRecognizer!
+    private var swipeGeture: UISwipeGestureRecognizer!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        title = "Look Listen & Feel"
+        
+        self.sideMenuController()?.sideMenu?.delegate = self
+        // Set gradient of navigationBar
+        gradientOfNavigationBar()
+        addTapGeture()
+        addSwipeGeture()
+        prepareNavigationBar()
     }
     @IBAction func onNewVideo(_ sender: Any) {
         let alert = UIAlertController(title: "Choose Video From", message: nil, preferredStyle: .alert)
@@ -68,6 +79,37 @@ class UploadVideoViewController: UIViewController
             print(error)
             self.view.stopProgresshub()
         }
+    }
+    // MARK: - Private methods
+    private func addTapGeture() {
+        tapGeture = UITapGestureRecognizer(target: self, action: #selector(mainViewTapped))
+        tapGeture.isEnabled = false
+        view.addGestureRecognizer(tapGeture)
+    }
+    
+    private func addSwipeGeture()
+    {
+        swipeGeture = UISwipeGestureRecognizer(target: self, action: #selector(mainViewTapped))
+        swipeGeture.isEnabled = false
+        swipeGeture.direction = .right
+        view.addGestureRecognizer(swipeGeture)
+    }
+    private func prepareNavigationBar()
+    {
+        // Added right bar button
+        let moreBarButtonItem = UIBarButtonItem(image: UIImage(named: "more-icon"),
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(moreBarButtonAction))
+        navigationItem.rightBarButtonItem = moreBarButtonItem
+    }
+    @objc func moreBarButtonAction() {
+        toggleSideMenuView()
+    }
+    
+    @objc func mainViewTapped() {
+        hideSideMenuView()
+        hideMenuOption()
     }
 }
 extension UploadVideoViewController: UIImagePickerControllerDelegate , UINavigationControllerDelegate {
@@ -127,3 +169,40 @@ extension UploadVideoViewController: UIImagePickerControllerDelegate , UINavigat
         }
 }
 
+// MARK: - ENSideMenuDelegate
+extension UploadVideoViewController: ENSideMenuDelegate {
+    func sideMenuWillOpen() {
+        tapGeture.isEnabled = true
+        swipeGeture.isEnabled = true
+        UIView.animate(withDuration: 0.2) {
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func sideMenuWillClose() {
+        tapGeture.isEnabled = false
+        swipeGeture.isEnabled = false
+        hideMenuOption()
+    }
+    private func hideMenuOption()
+    {
+        UIView.animate(withDuration: 0.4)
+        {
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }
+    }
+    func sideMenuShouldOpenSideMenu() -> Bool {
+        print("sideMenuShouldOpenSideMenu")
+        return true
+    }
+    
+    func sideMenuDidClose() {
+        print("sideMenuDidClose")
+    }
+    
+    func sideMenuDidOpen() {
+        print("sideMenuDidOpen")
+    }
+}

@@ -193,7 +193,7 @@ class HomeViewController: UIViewController {
         var videoUrl = fileURL
 
         if String(videoUrl.prefix(4)) != "http" {
-            videoUrl = baseURL + "img/user_profile_pics/" + videoUrl
+            videoUrl = imageURL + videoUrl
         }
      
         if let url = URL(string: videoUrl){

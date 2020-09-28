@@ -48,9 +48,11 @@ extension UIView{
 
 extension UIViewController{
     
-    func showalert(msg: String){
+    func showalert(msg: String, completion:(()->())? = nil){
         let alert = UIAlertController(title: "Alert", message: msg, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            completion?()
+        }))
        self.present(alert, animated: true, completion: nil)
     }
     
