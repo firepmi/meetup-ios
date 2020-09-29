@@ -26,6 +26,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var raceTextfield: UITextField!
     @IBOutlet weak var bodyTextfield: UITextField!
+    @IBOutlet weak var maleButton: UIButton!
+    @IBOutlet weak var showDistanceButton: UIButton!
     
     // MARK: - Variable
     var minDistance: Int?
@@ -40,6 +42,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
     var long: Double?
     let locationPicker = LocationPicker()
     var modelRace = [RaceModel]()
+    var isMale = true
+    var isShowedDistance = false
     
     // MARK: - Private var/let
     private var tapGeture: UITapGestureRecognizer!
@@ -119,14 +123,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
         toggleSideMenuView()
     }
     
-    // MARK: - IBAction
-    @IBAction func segmentValueChanged(_ sender: UISegmentedControl) {
-        print(sender.selectedSegmentIndex)
-    }
-    
-    @IBAction func distenceValueChanged(_ sender: UISwitch) {
-    
-    }
+   
     
     @IBAction func SearchAction(_ sender: UIButton) {
         guard locationTextField.text != ""else{
@@ -147,7 +144,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
     //MARK:- Api
     func searchNowApi(){
         let param : Parameters = ["userID" : standard.string(forKey: "userId") ?? "",
-//                                  "LookingFor": "\(segmentControl.selectedSegmentIndex)",
+                                  "LookingFor": "\(self.isMale ? 0: 1)",
                                   "LocationName": locationTextField.text ?? "",
                                   "LocationLatitude": "\(lat ?? 0.0)",
                                   "LocationLongitude": "\(long ?? 0.0)",
@@ -157,7 +154,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
                                   "MaxAge" : "\(self.maxAge ?? 100)",          //
                                   "RaceType": raceTextfield.text ?? "" ,
                                   "BodyType": ((bodyTextfield.text ?? "") != "None") ? (bodyTextfield.text ?? "") : "",
-                                 /* "ShowUserDistance" : (self.distanceSwitch.isOn) ? "1" : "0"*/]
+                                  "ShowUserDistance" : (self.isShowedDistance) ? "1" : "0"]
         print(param)
         self.view.startProgressHub()
         ApiInteraction.sharedInstance.funcToHitApi(url: apiURL + "SearchFilter", param: param, header: [:], success: { (json) in
@@ -240,11 +237,35 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
         
     }
     
+    @IBAction func onGenderChanged(_ sender: Any) {
+        isMale = !isMale
+        refreshSwitch()
+    }
+    @IBAction func onSwitchShowDistance(_ sender: Any) {
+        isShowedDistance = !isShowedDistance
+        refreshSwitch()
+    }
+    func refreshSwitch(){
+        if(isMale) {
+            maleButton.setImage(UIImage(named: "toggle_male.png"), for: .normal)
+        }
+        else {
+            maleButton.setImage(UIImage(named: "toggle_female.png"), for: .normal)
+        }
+        if(isShowedDistance) {
+            showDistanceButton.setImage(UIImage(named: "switch_yes.png"), for: .normal)
+        }
+        else {
+            showDistanceButton.setImage(UIImage(named: "switch_no.png"), for: .normal)
+        }
+    }
     
     //MARK:- Additional Functions
     func loadData(json: JSON){
         self.bodyTextfield.text = json["data"]["BodyType"].stringValue
         self.raceTextfield.text = json["data"]["RaceType"].stringValue
+        self.isMale = (json["data"]["LookingFor"].stringValue == "male")
+        self.isShowedDistance = (json["data"]["ShowUserDistance"].intValue == 1) ? true : false
 //        self.segmentControl.selectedSegmentIndex = (json["data"]["LookingFor"].stringValue == "male") ? 0 : 1
 //        self.distanceSwitch.isOn = (json["data"]["ShowUserDistance"].intValue == 1) ? true : false
         self.ageSlide.selectedMinValue = CGFloat(json["data"]["MinAge"].doubleValue)
@@ -258,6 +279,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
         self.minAge = json["data"]["MinAge"].intValue
         self.maxAge = json["data"]["MaxAge"].intValue
         self.locationTextField.text = json["data"]["LocationName"].stringValue
+        refreshSwitch()
     }
     
     //MARK:- textfield Delegates

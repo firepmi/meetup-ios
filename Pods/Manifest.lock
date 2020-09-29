@@ -108,6 +108,10 @@ PODS:
   - GTMSessionFetcher/Core (1.4.0)
   - GTMSessionFetcher/Full (1.4.0):
     - GTMSessionFetcher/Core (= 1.4.0)
+  - ImageSlideshow/Core (1.9.1)
+  - ImageSlideshow/SDWebImage (1.9.1):
+    - ImageSlideshow/Core
+    - SDWebImage (>= 3.7)
   - InputBarAccessoryView (4.2.2)
   - IQKeyboardManager (6.5.6)
   - KMPlaceholderTextView (1.4.0)
@@ -142,6 +146,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - FSPagerView
   - GoogleSignIn
+  - ImageSlideshow/SDWebImage
   - InputBarAccessoryView (= 4.2.2)
   - IQKeyboardManager
   - KMPlaceholderTextView
@@ -178,6 +183,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - ImageSlideshow
     - InputBarAccessoryView
     - IQKeyboardManager
     - KMPlaceholderTextView
@@ -216,6 +222,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  ImageSlideshow: 67184be896a28472bd3b906c33ce4e0734aa3d22
   InputBarAccessoryView: 2b937602598e2fab3149f37f51dd7ad795653812
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
   KMPlaceholderTextView: 2206c3df39979e9396e2d96fa9f427a8951121b0
@@ -230,6 +237,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   VerticalCardSwiper: 515b67e281731293cdf69d96904d67091389a1b4
 
-PODFILE CHECKSUM: b1b65fa0d08ff41683499d87a801fab9f2268748
+PODFILE CHECKSUM: c2b096a81de93580720e38b28b3aa130e6ca2cf7
 
 COCOAPODS: 1.9.3

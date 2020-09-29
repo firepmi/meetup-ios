@@ -12,6 +12,7 @@ import AVKit
 import MobileCoreServices
 import SDWebImage
 import PinterestLayout
+import ImageSlideshow
 
 class ProfileViewController: UIViewController {
     
@@ -36,6 +37,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var kidsLabel: UILabel!
     @IBOutlet weak var bodyTypeLabel: UILabel!
+    @IBOutlet weak var emptyView: RoundedView!
     
     //    @IBOutlet weak var heartButton: UIButton!
 //    @IBOutlet weak var recordButton: UIButton!
@@ -56,11 +58,12 @@ class ProfileViewController: UIViewController {
     var spacingOfScrollView: CGFloat = 15
     var model = ProfileModel.init(json: JSON(JSON.self))
     var userId: String?
+    var slideShow = ImageSlideshow()
     
     // MARK: - Private var/let
     private var tapGeture: UITapGestureRecognizer!
     private var swipeGeture: UISwipeGestureRecognizer!
-    
+    var localSource = [SDWebImageSource]()
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,22 +90,34 @@ class ProfileViewController: UIViewController {
         super.viewDidAppear(animated)
         navigationController?.isToolbarHidden  = true
         scrollView.contentOffset = CGPoint.zero
+        getImages()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         hideSideMenuView()
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        getImages()
-    }
     func getImages(){
-        let param : Parameters = ["user_id": standard.string(forKey: "userId") ?? ""]
+        let param : Parameters = ["user_id": self.userId ?? ""]
         ApiInteraction.sharedInstance.funcToHitApi(url: apiURL + "getImages", param: param, header: [:], success: { (json) in
             print(json)
             if json["status"].intValue == 1{
                 self.images = json["res"].arrayValue
                 self.collectionView.reloadData()
+                if self.images.count == 0 {
+                    self.emptyView.isHidden = false
+                    self.collectionView.isHidden = true
+                }
+                else {
+                    self.emptyView.isHidden = true
+                    self.collectionView.isHidden = false
+                    self.localSource.removeAll()
+                    for image in self.images {
+                        let imageUrl = "\(imageURL)\(image["image"].stringValue)"
+                        self.localSource.append(SDWebImageSource(urlString: imageUrl)!)
+                    }
+                    self.slideShow.setImageInputs(self.localSource)
+                }
             }else{
                 self.showalert(msg: json["message"].stringValue)
             }
@@ -274,6 +289,7 @@ class ProfileViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     @IBAction func onEditProfile(_ sender: Any) {
+        
     }
 }
 
@@ -319,7 +335,7 @@ extension ProfileViewController: ENSideMenuDelegate {
         print("sideMenuDidOpen")
     }
 }
-extension ProfileViewController: PinterestLayoutDelegate,UICollectionViewDataSource {
+extension ProfileViewController: PinterestLayoutDelegate,UICollectionViewDataSource,UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
@@ -329,6 +345,7 @@ extension ProfileViewController: PinterestLayoutDelegate,UICollectionViewDataSou
         let imageUrl = "\(imageURL)\(images[indexPath.row]["image"].stringValue)"
         print(imageUrl)
         imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "anonymous.jpg"))
+        
         return cell
     }
     func collectionView(collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath, withWidth: CGFloat) -> CGFloat {
@@ -354,6 +371,11 @@ extension ProfileViewController: PinterestLayoutDelegate,UICollectionViewDataSou
                         withWidth: CGFloat) -> CGFloat {
         let textFont = UIFont(name: "Arial-ItalicMT", size: 11)!
         return "Some text".heightForWidth(width: withWidth, font: textFont)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        slideShow.setCurrentPage(indexPath.row, animated: false)
+        slideShow.presentFullScreenController(from: self)
     }
 }
 

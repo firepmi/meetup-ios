@@ -51,7 +51,7 @@ pod 'Firebase/Auth'
 pod 'PinterestLayout'
 pod 'FSPagerView'
 pod 'KMPlaceholderTextView'
-
+pod 'ImageSlideshow/SDWebImage'
 end
 
 DEFAULT_SWIFT_VERSION = '5.3'
