@@ -119,7 +119,8 @@ class ProfileViewController: UIViewController {
                     self.slideShow.setImageInputs(self.localSource)
                 }
             }else{
-                self.showalert(msg: json["message"].stringValue)
+//                self.showalert(msg: json["message"].stringValue)
+                print(json["message"].stringValue)
             }
             self.view.stopProgresshub()
         }) { (error) in

@@ -128,6 +128,7 @@
 		FC7D347824FD44D600B20D46 /* icon_add.png in Resources */ = {isa = PBXBuildFile; fileRef = FC7D347624FD44D500B20D46 /* icon_add.png */; };
 		FC7D347924FD44D600B20D46 /* icon_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = FC7D347724FD44D600B20D46 /* icon_delete.png */; };
 		FC7D347B24FD480E00B20D46 /* UploadVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D347A24FD480E00B20D46 /* UploadVideoViewController.swift */; };
+		FC819FB9252430750042EE7F /* CropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC819FB82524306D0042EE7F /* CropperViewController.swift */; };
 		FCDB598324D3AB8E000ACEA9 /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = FCDB598024D3AB6B000ACEA9 /* icon_close.png */; };
 		FCDB598424D3AB8E000ACEA9 /* icon_not_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = FCDB598124D3AB80000ACEA9 /* icon_not_selected.png */; };
 		FCDB598524D3AB8E000ACEA9 /* icon_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = FCDB598224D3AB8E000ACEA9 /* icon_selected.png */; };
@@ -273,6 +274,7 @@
 		FC7D347624FD44D500B20D46 /* icon_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_add.png; sourceTree = "<group>"; };
 		FC7D347724FD44D600B20D46 /* icon_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_delete.png; sourceTree = "<group>"; };
 		FC7D347A24FD480E00B20D46 /* UploadVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadVideoViewController.swift; sourceTree = "<group>"; };
+		FC819FB82524306D0042EE7F /* CropperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropperViewController.swift; sourceTree = "<group>"; };
 		FCD11E5124C3455600591D5D /* LogoVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LogoVideo.mp4; sourceTree = "<group>"; };
 		FCDB598024D3AB6B000ACEA9 /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		FCDB598124D3AB80000ACEA9 /* icon_not_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_not_selected.png; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 		8B00F9E32296B43F00E9C1FF /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				FC819FB82524306D0042EE7F /* CropperViewController.swift */,
 				8B00F9E42296B43F00E9C1FF /* Constant.swift */,
 				8B00F9E52296B43F00E9C1FF /* Appstate.swift */,
 				FC598F552520E82B004F4267 /* FeetInchDelegate.swift */,
@@ -817,6 +820,7 @@
 				8B00FA1C2296B43F00E9C1FF /* EditProfileViewController.swift in Sources */,
 				FC3574C524FB9F9E0067D9A3 /* IntroSliderViewController.swift in Sources */,
 				8B00FA182296B43F00E9C1FF /* SignUpViewController.swift in Sources */,
+				FC819FB9252430750042EE7F /* CropperViewController.swift in Sources */,
 				FCE9F97E24FD0E1D000B0A9D /* RoundedTextView.swift in Sources */,
 				8B00FA1F2296B43F00E9C1FF /* ReplyCommentViewController.swift in Sources */,
 				8B00FA132296B43F00E9C1FF /* UISwitch.swift in Sources */,
@@ -1036,7 +1040,7 @@
 				CURRENT_PROJECT_VERSION = 1.0.1;
 				DEVELOPMENT_TEAM = G4RVEHWLX6;
 				INFOPLIST_FILE = meetup/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1062,7 +1066,7 @@
 				CURRENT_PROJECT_VERSION = 1.0.1;
 				DEVELOPMENT_TEAM = G4RVEHWLX6;
 				INFOPLIST_FILE = meetup/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

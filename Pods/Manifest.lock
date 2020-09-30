@@ -1,5 +1,6 @@
 PODS:
   - AETextFieldValidator (1.1.2)
+  - AKImageCropperView (2.0.0)
   - Alamofire (4.8.2)
   - AppAuth (1.4.0):
     - AppAuth/Core (= 1.4.0)
@@ -135,6 +136,7 @@ PODS:
 
 DEPENDENCIES:
   - AETextFieldValidator
+  - AKImageCropperView
   - Alamofire (= 4.8.2)
   - Cosmos
   - Crashlytics
@@ -161,6 +163,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AETextFieldValidator
+    - AKImageCropperView
     - Alamofire
     - AppAuth
     - Cosmos
@@ -200,6 +203,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AETextFieldValidator: 9c760ae43a97626e7840a810ac62a5cd2572c356
+  AKImageCropperView: 9c80fd45512daa69426161ad51c248655c1b5182
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
@@ -237,6 +241,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   VerticalCardSwiper: 515b67e281731293cdf69d96904d67091389a1b4
 
-PODFILE CHECKSUM: c2b096a81de93580720e38b28b3aa130e6ca2cf7
+PODFILE CHECKSUM: 42a385229dd5ed6766f0c1e04d7214347fc39724
 
 COCOAPODS: 1.9.3

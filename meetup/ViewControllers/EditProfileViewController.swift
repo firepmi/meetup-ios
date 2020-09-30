@@ -209,7 +209,8 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
                 self.images = json["res"].arrayValue
                 self.collectionView.reloadData()
             }else{
-                self.showalert(msg: json["message"].stringValue)
+                print(json["message"].stringValue)
+//                self.showalert(msg: json["message"].stringValue)
             }
             self.view.stopProgresshub()
         }) { (error) in
@@ -575,18 +576,30 @@ class EditProfileViewController: UIViewController, UITextFieldDelegate, UIImageP
     }
     //MARK:- ImagePickerDelegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let filePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            // imageViewPic.contentMode = .scaleToFill
-            if selectedMediaType == 0 {
-                self.userImageView.image = filePath
-            }
-            else {
-                self.uploadImage(image: filePath)
-            }
-        }
+//        if let filePath = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+//            // imageViewPic.contentMode = .scaleToFill
+//            if selectedMediaType == 0 {
+//                self.userImageView.image = filePath
+//            }
+//            else {
+//                self.uploadImage(image: filePath)
+//            }
+//        }
+//        picker.dismiss(animated: true, completion: nil)
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        
+        print("Image picked")
         picker.dismiss(animated: true, completion: nil)
+        let chosenImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage
+        CropperViewController.image = chosenImage
+        showCropperDialog(image: chosenImage!)
     }
-    
+    fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+        return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+    }
+    fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+        return input.rawValue
+    }
     //MARK: - textViewDelegates
     func textViewDidChange(_ textView: UITextView) {
 //        if textView.contentSize.height >= 100{
@@ -681,6 +694,31 @@ extension EditProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource
     }
 }
 
+extension EditProfileViewController: CropperViewDelegate {
+    func showCropperDialog(image: UIImage){
+        let vc = storyboard!.instantiateViewController(withIdentifier: "cropperViewController") as! CropperViewController
+        
+        vc.modalPresentationStyle = .overFullScreen
+        let popover = vc.popoverPresentationController
+        popover?.sourceView = view
+        popover?.sourceRect = view.bounds
+        popover?.delegate = self as? UIPopoverPresentationControllerDelegate
+        vc.delegate = self
+        vc.modalTransitionStyle = .crossDissolve
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.present(vc, animated: true, completion:nil)
+        })
+    }
+    func onCroppedImage(image:UIImage){
+        print("cropped")
+        if selectedMediaType == 0 {
+            self.userImageView.image = image
+        }
+        else {
+            self.uploadImage(image: image)
+        }
+    }
+}
 // MARK: - ENSideMenuDelegate
 extension EditProfileViewController: ENSideMenuDelegate {
     func sideMenuWillOpen() {

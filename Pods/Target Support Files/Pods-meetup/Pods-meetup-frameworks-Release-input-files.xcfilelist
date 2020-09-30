@@ -1,5 +1,6 @@
 ${PODS_ROOT}/Target Support Files/Pods-meetup/Pods-meetup-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AETextFieldValidator/AETextFieldValidator.framework
+${BUILT_PRODUCTS_DIR}/AKImageCropperView/AKImageCropperView.framework
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
 ${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework
 ${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework

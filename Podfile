@@ -52,6 +52,8 @@ pod 'PinterestLayout'
 pod 'FSPagerView'
 pod 'KMPlaceholderTextView'
 pod 'ImageSlideshow/SDWebImage'
+pod 'AKImageCropperView'
+
 end
 
 DEFAULT_SWIFT_VERSION = '5.3'
