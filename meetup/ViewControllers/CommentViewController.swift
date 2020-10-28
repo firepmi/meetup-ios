@@ -35,6 +35,7 @@ class CommentViewController: UIViewController
     private var highlightCount: Int = 3
     private var SidetapGeture: UITapGestureRecognizer!
     private var swipeGeture: UISwipeGestureRecognizer!
+    private var swipeGeture1: UISwipeGestureRecognizer!
     
     //MARK: - Variables
     let startDefault = "star-default"
@@ -59,7 +60,7 @@ class CommentViewController: UIViewController
         commentTableView.clipsToBounds = false
         commentTableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 17, bottom: 30, right: -17)
         self.commentTableView.tableFooterView = UIView()
-        self.sideMenuController()?.sideMenu?.delegate = self
+//        self.sideMenuController()?.sideMenu?.delegate = self
         addTransactionPop()
         self.viewRating.rating = 2
         self.viewShadow.isHidden = true
@@ -136,7 +137,15 @@ class CommentViewController: UIViewController
         hideSideMenuView()
         hideMenuOption()
     }
-    
+    @objc func leftSwipe(swipe: UISwipeGestureRecognizer) {
+//        dismiss(animated: true, completion: nil)
+        let transition = CATransition()
+        transition.duration = 0.4
+        transition.type = .push
+        transition.subtype = .fromRight
+        navigationController?.view.layer.add(transition, forKey: kCATransition)
+        navigationController?.popViewController(animated: true)
+    }
     @objc func SidemainViewTapped(swipe: UISwipeGestureRecognizer){
         hideSideMenuView()
         hideMenuOption()
@@ -183,6 +192,12 @@ class CommentViewController: UIViewController
         swipeGeture.isEnabled = false
         swipeGeture.direction = .right
         view.addGestureRecognizer(swipeGeture)
+        
+        swipeGeture1 = UISwipeGestureRecognizer(target: self, action: #selector(leftSwipe))
+        swipeGeture1.isEnabled = true
+        swipeGeture1.direction = .left
+        blockPremiumView.addGestureRecognizer(swipeGeture1)
+        
     }
     
     private func hideMenuOption() {

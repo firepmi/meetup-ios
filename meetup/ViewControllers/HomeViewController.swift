@@ -18,21 +18,23 @@ class HomeViewController: UIViewController {
     // MARK: - IBOutlets
 //    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var gradientView: UIView!
-    @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var likeImageView: UIImageView!
-    @IBOutlet weak var unlikeButton: UIButton!
-    @IBOutlet weak var unlikeImageView: UIImageView!
-    @IBOutlet weak var heartButton: UIButton!
-    @IBOutlet weak var heartImageView: UIImageView!
+//    @IBOutlet weak var likeButton: UIButton!
+//    @IBOutlet weak var likeImageView: UIImageView!
+//    @IBOutlet weak var unlikeButton: UIButton!
+//    @IBOutlet weak var unlikeImageView: UIImageView!
+//    @IBOutlet weak var heartButton: UIButton!
+//    @IBOutlet weak var heartImageView: UIImageView!
     @IBOutlet weak var flagButton: UIButton!
     @IBOutlet weak var flagImageView: UIImageView!
-    @IBOutlet weak var reloadButton: UIButton!
-    @IBOutlet weak var reloadImageView: UIImageView!
+//    @IBOutlet weak var reloadButton: UIButton!
+//    @IBOutlet weak var reloadImageView: UIImageView!
     @IBOutlet weak var nameUserLabel: UILabel!
     @IBOutlet weak var rangeLabel: UILabel!
     @IBOutlet private var cardSwiper: VerticalCardSwiper!
     @IBOutlet weak var onlineStatus: UILabel!
     @IBOutlet weak var tutorialView: UIView!
+    @IBOutlet weak var heartButton: UIButton!
+    @IBOutlet weak var skipButton: UIButton!
     
     
     // MARK: - Variables
@@ -48,7 +50,6 @@ class HomeViewController: UIViewController {
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-       cardView = VerticalCardSwiper(frame: self.cardSwiper.frame)
         
         SubscriptionProducts.store.requestProducts({ [weak self] success, products in
             guard self != nil else { return }
@@ -68,6 +69,29 @@ class HomeViewController: UIViewController {
         }
         
         navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        DispatchQueue.main.async {
+            if self.model.count != 0{
+                self.loadData()
+                
+            }else{
+                if !(self.sideMenuController()?.sideMenu?.isMenuOpen ?? false){
+                    DispatchQueue.main.async {
+                        self.fetchAllProfile()
+                    }
+                }else{
+                    self.fetchAllProfile()
+                    self.hideSideMenuView()
+                }
+            }
+        }
+        prepareGradient()
+        addTapGeture()
+        addSwipeGeture()
+        
+        cardView = VerticalCardSwiper(frame: self.cardSwiper.frame)
+        cardView.delegate = self
+        cardView.datasource = self
     }
     func showIntroSlide() {
         let introSilder = storyboard!.instantiateViewController(withIdentifier: "intro_slide")
@@ -96,33 +120,17 @@ class HomeViewController: UIViewController {
         
         cardView.layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: 1))
         //        cardView.bounds = self.cardSwiper.bounds
-        cardView.frame = CGRect(x: 15, y: 20, width: self.view.frame.width - 30, height: self.cardSwiper.frame.height)  //self.view.frame.height - self.viewBottomheight.constant - 95
+        cardView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.cardSwiper.frame.height)  //self.view.frame.height - self.viewBottomheight.constant - 95
+        cardView.topInset = 10
         cardSwiper.addSubview(cardView)
         cardSwiper.backgroundColor = UIColor.clear
-        cardView.delegate = self
-        cardView.datasource = self
+        
         cardView.isPreviousCardVisible = false
         cardView.visibleNextCardHeight = 0
         cardView.isSideSwipingEnabled = false
         cardView.register(nib: UINib(nibName: "HomeViewCell", bundle: nil), forCellWithReuseIdentifier: "HomeViewCell")
-        prepareGradient()
-        addTapGeture()
-        addSwipeGeture()
-        DispatchQueue.main.async {
-            if self.model.count != 0{
-                self.loadData()
-                
-            }else{
-                if !(self.sideMenuController()?.sideMenu?.isMenuOpen ?? false){
-                    DispatchQueue.main.async {
-                        self.fetchAllProfile()
-                    }
-                }else{
-                    self.fetchAllProfile()
-                    self.hideSideMenuView()
-                }
-            }
-        }
+        
+        
     }
     
     @IBAction func closeTutorial(_ sender: Any) {
@@ -162,7 +170,7 @@ class HomeViewController: UIViewController {
     
     private func disableUIView(isEnable: Bool) {
 //        collectionView.isUserInteractionEnabled = isEnable
-        reloadButton.isUserInteractionEnabled = isEnable
+        skipButton.isUserInteractionEnabled = isEnable
         flagButton.isUserInteractionEnabled = isEnable
         heartButton.isUserInteractionEnabled = isEnable
     }
@@ -227,41 +235,41 @@ class HomeViewController: UIViewController {
         }
         return nil
     }
-    
-    // MARK: - IBActions
-    @IBAction func likeButtonAction(_ sender: UIButton) {
-        self.likeImageView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-        clickButtonAnimation {
-            self.likeImageView.transform = .identity
-            self.likeImageView.image = (self.likeImageView.image == #imageLiteral(resourceName: "like-icon")) ? #imageLiteral(resourceName: "like-small") : #imageLiteral(resourceName: "like-icon")
-            self.unlikeImageView.image = #imageLiteral(resourceName: "unlike-icon")
-            
-        }
-       
-         self.statusApi(status: "1")
-    }
-    
-    @IBAction func unlikeButtonAction(_ sender: UIButton) {
-        self.unlikeImageView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-        clickButtonAnimation {
-            self.unlikeImageView.transform = .identity
-            self.unlikeImageView.image = (self.unlikeImageView.image == #imageLiteral(resourceName: "unlike-icon")) ? #imageLiteral(resourceName: "unlike-small") : #imageLiteral(resourceName: "unlike-icon")
-            self.likeImageView.image = #imageLiteral(resourceName: "like-icon")
-        }
-            self.statusApi(status: "2")
-        
-    }
-    
-    @IBAction func heartButtonAction(_ sender: UIButton) {
-        self.heartImageView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-        clickButtonAnimation {
-            self.heartImageView.transform = .identity
-            self.heartImageView.image = (self.heartImageView.image == #imageLiteral(resourceName: "heart-small")) ? #imageLiteral(resourceName: "heart-icon") : #imageLiteral(resourceName: "heart-small")
-        }
-            self.statusApi(status: "3")
-        
-    }
-    
+//
+//    // MARK: - IBActions
+//    @IBAction func likeButtonAction(_ sender: UIButton) {
+//        self.likeImageView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+//        clickButtonAnimation {
+//            self.likeImageView.transform = .identity
+//            self.likeImageView.image = (self.likeImageView.image == #imageLiteral(resourceName: "like-icon")) ? #imageLiteral(resourceName: "like-small") : #imageLiteral(resourceName: "like-icon")
+//            self.unlikeImageView.image = #imageLiteral(resourceName: "unlike-icon")
+//
+//        }
+//
+//         self.statusApi(status: "1")
+//    }
+//
+//    @IBAction func unlikeButtonAction(_ sender: UIButton) {
+//        self.unlikeImageView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+//        clickButtonAnimation {
+//            self.unlikeImageView.transform = .identity
+//            self.unlikeImageView.image = (self.unlikeImageView.image == #imageLiteral(resourceName: "unlike-icon")) ? #imageLiteral(resourceName: "unlike-small") : #imageLiteral(resourceName: "unlike-icon")
+//            self.likeImageView.image = #imageLiteral(resourceName: "like-icon")
+//        }
+//            self.statusApi(status: "2")
+//
+//    }
+//
+//    @IBAction func heartButtonAction(_ sender: UIButton) {
+//        self.heartImageView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+//        clickButtonAnimation {
+//            self.heartImageView.transform = .identity
+//            self.heartImageView.image = (self.heartImageView.image == #imageLiteral(resourceName: "heart-small")) ? #imageLiteral(resourceName: "heart-icon") : #imageLiteral(resourceName: "heart-small")
+//        }
+//            self.statusApi(status: "3")
+//
+//    }
+//
     @IBAction func flagButtonAction(_ sender: UIButton) {
         self.flagImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
@@ -300,11 +308,26 @@ class HomeViewController: UIViewController {
         
     }
     
-    @IBAction func reloadButtonAction(_ sender: UIButton) {
-        self.reloadImageView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi * 6/5))
-        UIView.animate(withDuration: 0.4) {
-            self.reloadImageView.transform = .identity
+//    @IBAction func reloadButtonAction(_ sender: UIButton) {
+//        self.reloadImageView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi * 6/5))
+//        UIView.animate(withDuration: 0.4) {
+//            self.reloadImageView.transform = .identity
+//        }
+//    }
+    @IBAction func onHeartButtonClicked(_ sender: Any) {
+        self.statusApi(status: "1")
+        var next = index! + 1
+        if next > model.count {
+            next = 0
         }
+        cardView.moveCard(at: index!, to: next)
+        loadData()
+    }
+    @IBAction func onSkipButtonClicked(_ sender: Any) {
+        self.statusApi(status: "2")
+        model.remove(at: index!)
+        cardView.deleteCards(at: [index!])
+        loadData()
     }
     
     @IBAction func moreBarButtonAction(_ sender: UIBarButtonItem) {
@@ -374,7 +397,7 @@ class HomeViewController: UIViewController {
                     return
                 }
                     DispatchQueue.main.async {
-                        self.loadData()
+                        self.filterData()
                     }
             }else{
                 self.showalert(msg: json["message"].stringValue)
@@ -386,33 +409,45 @@ class HomeViewController: UIViewController {
             self.view.stopProgresshub()
         }
     }
-    
+    func filterData(){
+        for var index in 0 ..< model.count {
+            let profile = model[index]
+            if profile.report == "1" || profile.unlike == "1" {
+                model.remove(at: index)
+                index = index - 1
+            }
+        }
+        loadData()
+    }
     
     //MARK: - Additional Functions
     ///function to load all Api Data in View
     func loadData(){
+        if model.count == 0 { return }
+        if index == nil { index = 0 }
+        if index! >= model.count { index = 0 }
         self.nameUserLabel.text = model[self.index ?? 0].userName ?? ""
         self.onlineStatus.text = model[self.index ?? 0].last_active ?? ""
         self.rangeLabel.isHidden = !(self.showDistance ?? true)
         self.rangeLabel.text = (self.model[self.index ?? 0].distance ?? "") + " Miles Away"
-        self.likeImageView.image = #imageLiteral(resourceName: "like-icon")
-        self.unlikeImageView.image = #imageLiteral(resourceName: "unlike-icon")
-        self.heartImageView.image = #imageLiteral(resourceName: "heart-icon")
+//        self.likeImageView.image = #imageLiteral(resourceName: "like-icon")
+//        self.unlikeImageView.image = #imageLiteral(resourceName: "unlike-icon")
+//        self.heartImageView.image = #imageLiteral(resourceName: "heart-icon")
         self.flagImageView.image = #imageLiteral(resourceName: "flag-icon")
-        if (self.model[self.index ?? 0].liked ?? "1") == "1"{
-            self.likeImageView.image = #imageLiteral(resourceName: "like-small")
-           
-        }
-         if (self.model[self.index ?? 0].unlike ?? "1") == "1"{
-            self.unlikeImageView.image = #imageLiteral(resourceName: "unlike-small")
-            
-        }
-        if (self.model[self.index ?? 0].setFavourite ?? "1") == "1"{
-            self.heartImageView.image = #imageLiteral(resourceName: "heart-orange-small")
-        }
-        if (model[self.index ?? 0].report ?? "1") == "1"{
-            self.flagImageView.image = #imageLiteral(resourceName: "report-small")
-        }
+//        if (self.model[self.index ?? 0].liked ?? "1") == "1"{
+//            self.likeImageView.image = #imageLiteral(resourceName: "like-small")
+//
+//        }
+//         if (self.model[self.index ?? 0].unlike ?? "1") == "1"{
+//            self.unlikeImageView.image = #imageLiteral(resourceName: "unlike-small")
+//
+//        }
+//        if (self.model[self.index ?? 0].setFavourite ?? "1") == "1"{
+//            self.heartImageView.image = #imageLiteral(resourceName: "heart-orange-small")
+//        }
+//        if (model[self.index ?? 0].report ?? "1") == "1"{
+//            self.flagImageView.image = #imageLiteral(resourceName: "report-small")
+//        }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

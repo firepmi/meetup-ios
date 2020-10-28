@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 import RangeSeekSlider
 import LocationPickerViewController
+import CoreLocation
 
 class SettingsViewController: UIViewController, UITextFieldDelegate
 {
@@ -49,6 +50,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
     private var tapGeture: UITapGestureRecognizer!
     private var swipeGeture: UISwipeGestureRecognizer!
     
+    let locationManager = CLLocationManager()
+    
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,10 +72,16 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
             self.fetchRace()
             
         }
+        locationManager.requestWhenInUseAuthorization()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isToolbarHidden  = true
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
     }
     
     // MARK: - Private Variable
@@ -122,9 +131,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
         swipeGeture.isEnabled = true
         toggleSideMenuView()
     }
-    
-   
-    
+      
     @IBAction func SearchAction(_ sender: UIButton) {
         guard locationTextField.text != ""else{
             self.showalert(msg: "Please Enter Location")
@@ -177,7 +184,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate
                     vc.tableView.reloadData()
                 }
                 self.sideMenuController()?.setContentViewController(destVC)
-                self.navigationController?.pushViewController(destVC, animated: true)
+                if !(self.navigationController?.topViewController?.isKind(of: HomeViewController.self))! {
+                    self.navigationController?.pushViewController(destVC, animated: true)
+                }
+                else {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
             }
         }) { (error) in
             print(error)
@@ -396,3 +408,52 @@ extension SettingsViewController: ENSideMenuDelegate {
     }
 }
 
+extension SettingsViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        if locationTextField.text != "" {
+            return
+        }
+        let ceo: CLGeocoder = CLGeocoder()
+        ceo.reverseGeocodeLocation(manager.location!, completionHandler:
+                    {(placemarks, error) in
+                        if (error != nil)
+                        {
+                            print("reverse geodcode fail: \(error!.localizedDescription)")
+                        }
+                        let pm = placemarks! as [CLPlacemark]
+
+                        if pm.count > 0 {
+                            let pm = placemarks![0]
+//                            print(pm.country)
+//                            print(pm.locality)
+//                            print(pm.subLocality)
+//                            print(pm.thoroughfare)
+//                            print(pm.postalCode)
+//                            print(pm.subThoroughfare)
+                            var addressString : String = ""
+                            if pm.subLocality != nil {
+                                addressString = addressString + pm.subLocality! + ", "
+                            }
+                            if pm.thoroughfare != nil {
+                                addressString = addressString + pm.thoroughfare! + ", "
+                            }
+                            if pm.locality != nil {
+                                addressString = addressString + pm.locality! + ", "
+                            }
+                            if pm.country != nil {
+                                addressString = addressString + pm.country! + ", "
+                            }
+                            if pm.postalCode != nil {
+                                addressString = addressString + pm.postalCode! + " "
+                            }
+                            
+                            print(addressString)
+                            self.lat = locValue.latitude
+                            self.long = locValue.longitude
+                            self.locationTextField.text = addressString
+                      }
+                })
+    }
+}

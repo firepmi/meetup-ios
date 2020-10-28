@@ -20,6 +20,10 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var thumbImageView: RoundedImageView!
+    @IBOutlet weak var thumbNameLabel: UILabel!
+    @IBOutlet weak var thumbOnlineStatus: RoundedView!
+    
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var locationNameLabel: UILabel!
 //    @IBOutlet weak var ageLabel: UILabel!
@@ -38,6 +42,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var kidsLabel: UILabel!
     @IBOutlet weak var bodyTypeLabel: UILabel!
     @IBOutlet weak var emptyView: RoundedView!
+    @IBOutlet weak var collectionViewHeightContraint: NSLayoutConstraint!
     
     //    @IBOutlet weak var heartButton: UIButton!
 //    @IBOutlet weak var recordButton: UIButton!
@@ -90,6 +95,11 @@ class ProfileViewController: UIViewController {
         super.viewDidAppear(animated)
         navigationController?.isToolbarHidden  = true
         scrollView.contentOffset = CGPoint.zero
+        thumbImageView.alpha = 0
+        thumbImageView.contentMode = .scaleAspectFill
+        thumbImageView.roundCorners(corners: .allCorners, radius: thumbImageView.frame.height / 2 )
+        thumbNameLabel.alpha = 0
+        thumbOnlineStatus.alpha = 0
         getImages()
     }
     
@@ -105,8 +115,9 @@ class ProfileViewController: UIViewController {
                 self.images = json["res"].arrayValue
                 self.collectionView.reloadData()
                 if self.images.count == 0 {
-                    self.emptyView.isHidden = false
+                    self.emptyView.isHidden = true
                     self.collectionView.isHidden = true
+                    self.collectionViewHeightContraint.constant = 0
                 }
                 else {
                     self.emptyView.isHidden = true
@@ -117,11 +128,17 @@ class ProfileViewController: UIViewController {
                         self.localSource.append(SDWebImageSource(urlString: imageUrl)!)
                     }
                     self.slideShow.setImageInputs(self.localSource)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        print(self.collectionView.contentSize.height)
+                        self.collectionViewHeightContraint.constant = self.collectionView.contentSize.height
+                    }
                 }
             }else{
 //                self.showalert(msg: json["message"].stringValue)
                 print(json["message"].stringValue)
+                self.collectionViewHeightContraint.constant = 0
             }
+            self.collectionView.layoutIfNeeded()
             self.view.stopProgresshub()
         }) { (error) in
             print(error)
@@ -182,14 +199,18 @@ class ProfileViewController: UIViewController {
     //MARK:- Other functions
     func loadData(){
         self.userNameLabel.text = self.model.userName ?? ""
+        self.thumbNameLabel.text = self.model.userName ?? ""
 //        self.ageLabel.text = self.dateConverter(string: "\(self.model.DateOfBirth ?? "")")
         self.userImageView.sd_setImage(with: URL(string: (self.model.userImage ?? "")), placeholderImage: #imageLiteral(resourceName: "anonymous.jpg"), options: .refreshCached) { (image, error, cache, url) in
             if image != nil{
                 self.userImageView.image = image
+                self.thumbImageView.image = image
             }else{
                 self.userImageView.image = #imageLiteral(resourceName: "anonymous.jpg")
+                self.thumbImageView.image = #imageLiteral(resourceName: "anonymous.jpg")
             }
         }
+        
 //        self.lookingForLabel.text = self.model.lookingFor ?? ""
         self.longestRelationshipLabel.text = self.model.longestRelationship ?? ""
 //        self.kidsLabel.text = self.model.kids ?? ""
@@ -200,6 +221,7 @@ class ProfileViewController: UIViewController {
 //        self.jobLabel.text = self.model.bodyType ?? ""
         self.locationNameLabel.text = self.model.address ?? ""
         self.onlineStatusView.isHidden = ((self.model.onlineStatus ?? "") == "0")
+        self.thumbOnlineStatus.isHidden = ((self.model.onlineStatus ?? "") == "0")
         
         self.heightLabel.text = self.model.height ?? ""
         self.longestRelationshipLabel.text = self.model.longestRelationship ?? ""
@@ -284,8 +306,7 @@ class ProfileViewController: UIViewController {
             self.view.stopProgresshub()
         }
     }
-    
-    
+        
     @IBAction func onBack(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
@@ -301,6 +322,18 @@ extension ProfileViewController: UIScrollViewDelegate {
         if( newHeight < 150) {
             newHeight = 150
         }
+        var a = scrollView.contentOffset.y
+        if a < 120 { a = 120 }
+        else if a > 150 { a = 150 }
+        print(a)
+        
+        userImageView.alpha = (150 - a) / 30
+        userNameLabel.alpha = (150 - a) / 30
+        onlineStatusView.alpha = (150 - a) / 30
+        thumbImageView.alpha = 1 - ((150 - a)/30)
+        thumbNameLabel.alpha = 1 - ((150 - a)/30)
+        thumbOnlineStatus.alpha = 1 - ((150 - a)/30)
+        
         userImageHeightConstraint.constant = newHeight
     }
 }
